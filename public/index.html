@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Frame Forge</title>
+    <meta
+      name="description"
+      content="A local editorial-style web interface for generating images with gpt-image-2."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,700&family=Manrope:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-mark">
+          <span class="hero-line"></span>
+          <span class="hero-label">Frame Forge / GPT-Image-2</span>
+        </div>
+        <div class="hero-copy">
+          <p class="eyebrow">Local image workstation</p>
+          <h1>Build image prompts like an art direction desk, not a chatbot form.</h1>
+          <p class="lede">
+            This page uses your own OpenAI API key on the server and sends text-to-image requests
+            to <code>gpt-image-2</code>.
+          </p>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="panel panel-input">
+          <div class="panel-heading">
+            <p class="panel-kicker">Prompt</p>
+            <h2>Compose the frame</h2>
+          </div>
+
+          <form id="generator-form" class="generator-form">
+            <label class="field field-prompt">
+              <span>Describe the image</span>
+              <textarea
+                id="prompt"
+                name="prompt"
+                rows="10"
+                placeholder="Cinematic still of a lone florist arranging impossible cobalt flowers in a rain-polished midnight market, editorial lighting, crisp handwritten price cards, restrained palette of black lacquer, ivory, and electric blue..."
+                required
+              ></textarea>
+            </label>
+
+            <div class="field-grid">
+              <label class="field">
+                <span>Size</span>
+                <select id="size" name="size">
+                  <option value="1024x1024">1024 × 1024</option>
+                  <option value="1024x1536">1024 × 1536</option>
+                  <option value="1536x1024">1536 × 1024</option>
+                  <option value="2048x2048">2048 × 2048</option>
+                  <option value="2048x1152">2048 × 1152</option>
+                  <option value="1152x2048">1152 × 2048</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Quality</span>
+                <select id="quality" name="quality">
+                  <option value="high">High</option>
+                  <option value="medium">Medium</option>
+                  <option value="low">Low</option>
+                  <option value="auto">Auto</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Format</span>
+                <select id="outputFormat" name="outputFormat">
+                  <option value="png">PNG</option>
+                  <option value="jpeg">JPEG</option>
+                  <option value="webp">WEBP</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Count</span>
+                <select id="n" name="n">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Background</span>
+                <select id="background" name="background">
+                  <option value="auto">Auto</option>
+                  <option value="opaque">Opaque</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Moderation</span>
+                <select id="moderation" name="moderation">
+                  <option value="low">Low</option>
+                  <option value="auto">Auto</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="example-strip">
+              <button class="example-chip" type="button" data-prompt="Editorial perfume campaign, heavy cream backdrop, obsidian glass bottle on mirrored steel plinth, restrained luxury layout, exact headline in quotes &quot;NOCTURNE / 03&quot;, immaculate typography, publication-grade lighting.">Luxury poster</button>
+              <button class="example-chip" type="button" data-prompt="Product launch render for a transparent mechanical keyboard floating above folded tracing paper and machined aluminum, daylight studio photography, precision reflections, crisp labeling, modern industrial art direction.">Product render</button>
+              <button class="example-chip" type="button" data-prompt="Dense scientific infographic showing orbital debris flows around Earth, dark slate background, precise labels, clear legend, subtle neon accents, publication-ready hierarchy, exact title in quotes &quot;LOW EARTH ORBIT TRAFFIC&quot;.">Technical infographic</button>
+            </div>
+
+            <div class="actions">
+              <button id="submit-button" class="button-primary" type="submit">Generate Images</button>
+              <p id="status-text" class="status-text">Waiting for a prompt.</p>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel panel-output">
+          <div class="panel-heading">
+            <p class="panel-kicker">Output</p>
+            <h2>Review the take</h2>
+          </div>
+
+          <div id="empty-state" class="empty-state">
+            <p>Your images will appear here.</p>
+            <span>Tip: keep the prompt specific, and quote any text that must appear inside the image.</span>
+          </div>
+
+          <div id="gallery" class="gallery" hidden></div>
+        </section>
+      </main>
+    </div>
+
+    <template id="image-card-template">
+      <article class="image-card">
+        <div class="image-frame">
+          <img alt="Generated image result" />
+        </div>
+        <div class="image-meta">
+          <span class="image-index"></span>
+          <a class="download-link" download>Download</a>
+        </div>
+        <p class="revised-prompt" hidden></p>
+      </article>
+    </template>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

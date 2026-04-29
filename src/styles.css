@@ -603,6 +603,7 @@ a {
   align-items: center;
   gap: 10px;
   margin-left: auto;
+  position: relative;
 }
 
 .switch-wrap,
@@ -989,6 +990,10 @@ a {
     gap: 8px;
   }
 
+  .sidebar-open-btn {
+    display: inline-flex;
+  }
+
   .bar-actions {
     gap: 6px;
   }
@@ -1037,6 +1042,10 @@ a {
 
 @media (min-width: 769px) {
   .sidebar-backdrop {
+    display: none;
+  }
+
+  .sidebar-open-btn {
     display: none;
   }
 

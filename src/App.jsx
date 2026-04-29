@@ -782,6 +782,15 @@ export default function App() {
 
       <main className="main-area">
         <div className="main-bar">
+          <button
+            className="icon-button sidebar-open-btn"
+            type="button"
+            onClick={toggleSidebar}
+            aria-label="Open sidebar"
+          >
+            {"≡"}
+          </button>
+
           <div className={`status-dot ${status}`}></div>
 
           <div className="bar-actions">

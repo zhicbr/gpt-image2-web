@@ -8,6 +8,7 @@ import {
   SIZE_OPTIONS,
   THEME_OPTIONS,
 } from "./copy";
+import { PRESET_PAGE_SIZE, PRESET_SOURCES } from "./presetLibrary";
 
 const SUGGESTION_ORDER = ["size", "quality", "background", "moderation"];
 const SUGGESTION_LEFT_COLUMN = ["size"];
@@ -68,7 +69,7 @@ function SuggestionSelect({ label, options, value, onChange, onClear, labels }) 
         </select>
         {value ? (
           <button className="suggestion-clear" type="button" onClick={onClear} aria-label={`clear-${label}`}>
-            ×
+            {"\u00D7"}
           </button>
         ) : null}
       </div>
@@ -134,16 +135,16 @@ export default function App() {
     background: null,
     moderation: null,
   });
+  const [presetSourceId, setPresetSourceId] = useState(PRESET_SOURCES[0]?.id || "");
+  const [presetPage, setPresetPage] = useState(0);
+  const [activePresetId, setActivePresetId] = useState(null);
+  const [presetDrafts, setPresetDrafts] = useState({});
 
   const t = COPY[lang];
   const suggestionGroups = useMemo(() => buildSuggestionGroups(t), [t]);
   const suggestionGroupMap = useMemo(
     () => Object.fromEntries(suggestionGroups.map((group) => [group.key, group])),
     [suggestionGroups]
-  );
-  const presets = useMemo(
-    () => ["editorial", "product", "poster", "diagram"].map((key) => ({ key, ...t.presets[key] })),
-    [t]
   );
 
   useEffect(() => {
@@ -176,6 +177,39 @@ export default function App() {
     setPan({ x: 0, y: 0 });
   }, [result?.src]);
 
+  const currentSource = useMemo(() => {
+    return PRESET_SOURCES.find((source) => source.id === presetSourceId) || PRESET_SOURCES[0] || null;
+  }, [presetSourceId]);
+
+  const presetPageCount = useMemo(() => {
+    if (!currentSource) return 1;
+    return Math.max(1, Math.ceil(currentSource.items.length / PRESET_PAGE_SIZE));
+  }, [currentSource]);
+
+  const pagedPresets = useMemo(() => {
+    if (!currentSource) return [];
+    const start = presetPage * PRESET_PAGE_SIZE;
+    return currentSource.items.slice(start, start + PRESET_PAGE_SIZE);
+  }, [currentSource, presetPage]);
+
+  useEffect(() => {
+    if (!pagedPresets.length) {
+      setActivePresetId(null);
+      return;
+    }
+
+    if (!pagedPresets.some((preset) => preset.id === activePresetId)) {
+      setActivePresetId(pagedPresets[0].id);
+    }
+  }, [activePresetId, pagedPresets]);
+
+  const activePreset = useMemo(() => {
+    if (!currentSource || !activePresetId) return null;
+    return currentSource.items.find((preset) => preset.id === activePresetId) || null;
+  }, [activePresetId, currentSource]);
+
+  const activePresetText = activePreset ? presetDrafts[activePreset.id] ?? activePreset.originalText : "";
+
   function updateField(key, value) {
     setForm((current) => ({ ...current, [key]: value }));
   }
@@ -188,11 +222,33 @@ export default function App() {
     updateSuggestion(key, null);
   }
 
-  function applyPreset(preset) {
-    setForm((current) => ({ ...current, prompt: preset.prompt }));
-    setTab("custom");
-    setStatus("idle");
-    setMessage(t.messages.presetApplied);
+  function updateActivePresetText(value) {
+    if (!activePreset) return;
+    setPresetDrafts((current) => ({
+      ...current,
+      [activePreset.id]: value,
+    }));
+  }
+
+  function restoreActivePreset() {
+    if (!activePreset) return;
+    setPresetDrafts((current) => ({
+      ...current,
+      [activePreset.id]: activePreset.originalText,
+    }));
+  }
+
+  function selectPresetSource(sourceId) {
+    if (sourceId === presetSourceId) return;
+    setPresetSourceId(sourceId);
+    setPresetPage(0);
+  }
+
+  function stepPresetPage(direction) {
+    setPresetPage((current) => {
+      const next = current + direction;
+      return Math.max(0, Math.min(presetPageCount - 1, next));
+    });
   }
 
   const activeSuggestionPills = useMemo(() => {
@@ -223,7 +279,10 @@ export default function App() {
   }
 
   async function handleGenerate() {
-    const rawPrompt = form.prompt.trim();
+    const customPrompt = form.prompt.trim();
+    const presetPrompt = activePresetText.trim();
+    const rawPrompt = tab === "preset" ? presetPrompt : customPrompt;
+
     if (!rawPrompt) {
       setStatus("error");
       setResult(null);
@@ -243,7 +302,7 @@ export default function App() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          prompt: buildComposedPrompt(),
+          prompt: tab === "preset" ? presetPrompt : buildComposedPrompt(),
           outputFormat: form.outputFormat,
           n: "1",
         }),
@@ -398,6 +457,95 @@ export default function App() {
     );
   }
 
+  function renderPresetPanel() {
+    return (
+      <div className="preset-panel">
+        <div className="preset-source-bar">
+          <div className="preset-source-switch">
+            {PRESET_SOURCES.map((source) => (
+              <button
+                key={source.id}
+                className={`preset-source-button${currentSource?.id === source.id ? " is-active" : ""}`}
+                type="button"
+                onClick={() => selectPresetSource(source.id)}
+              >
+                {source.label}
+              </button>
+            ))}
+          </div>
+          {currentSource?.sourceUrl ? (
+            <a
+              className="preset-source-link"
+              href={currentSource.sourceUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={t.preset.sourceLink}
+              title={t.preset.sourceLink}
+            >
+              {"\u2197"}
+            </a>
+          ) : null}
+        </div>
+
+        <div className="preset-list-card">
+          {pagedPresets.map((preset) => (
+            <button
+              key={preset.id}
+              className={`preset-item${activePresetId === preset.id ? " is-active" : ""}`}
+              type="button"
+              onClick={() => setActivePresetId(preset.id)}
+            >
+              <span className="preset-item-title">{preset.titleZh}</span>
+              <span className="preset-item-mark">{activePresetId === preset.id ? "-" : "+"}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="preset-pager">
+          <button
+            className="preset-page-button"
+            type="button"
+            onClick={() => stepPresetPage(-1)}
+            disabled={presetPage <= 0}
+            aria-label="previous-page"
+          >
+            {"<"}
+          </button>
+          <span className="preset-page-indicator">
+            {presetPageCount ? `${presetPage + 1}/${presetPageCount}` : "0/0"}
+          </span>
+          <button
+            className="preset-page-button"
+            type="button"
+            onClick={() => stepPresetPage(1)}
+            disabled={presetPage >= presetPageCount - 1}
+            aria-label="next-page"
+          >
+            {">"}
+          </button>
+        </div>
+
+        <div className="preset-editor-card">
+          <div className="preset-editor-top">
+            <div className="preset-editor-title">{activePreset?.titleZh || ""}</div>
+            {activePreset ? (
+              <button className="preset-restore" type="button" onClick={restoreActivePreset}>
+                {t.preset.restore}
+              </button>
+            ) : null}
+          </div>
+          <textarea
+            className="prompt-input preset-editor-input"
+            value={activePresetText}
+            onChange={(event) => updateActivePresetText(event.target.value)}
+            onKeyDown={handlePromptKeyDown}
+            spellCheck="false"
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`app-shell${collapsed ? " is-collapsed" : ""}`}>
       <aside className="sidebar">
@@ -485,14 +633,7 @@ export default function App() {
               </div>
             </div>
           ) : (
-            <div className="preset-grid">
-              {presets.map((preset) => (
-                <button key={preset.key} className="preset-card" type="button" onClick={() => applyPreset(preset)}>
-                  <strong>{preset.label}</strong>
-                  <span>{preset.note}</span>
-                </button>
-              ))}
-            </div>
+            renderPresetPanel()
           )}
         </div>
       </aside>

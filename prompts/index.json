@@ -1,0 +1,68 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-04-28T00:00:00Z",
+  "description": "Unified GPT-Image-2 prompt collection from 5 open-source repositories",
+  "total": 0,
+  "sources": [
+    {
+      "id": "api-prompts",
+      "name": "Awesome-GPT-Image-2-API-Prompts",
+      "file": "awesome-gpt-image-2-api-prompts.json",
+      "source_url": "https://github.com/Anil-matcha/Awesome-GPT-Store",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "id": "youmind",
+      "name": "awesome-gpt-image-2-new",
+      "file": "awesome-gpt-image-2-new.json",
+      "source_url": "https://github.com/YouMind-OpenLab/awesome-gpt-image-2",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "id": "evolink",
+      "name": "awesome-gpt-image-2-prompts",
+      "file": "awesome-gpt-image-2-prompts.json",
+      "source_url": "https://github.com/EvoLinkAI/awesome-gpt-image-2-prompts",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "id": "canghe",
+      "name": "awesome-gpt-image-2",
+      "file": "awesome-gpt-image-2.json",
+      "source_url": "https://github.com/canghe/awesome-gpt-image-2",
+      "license": "MIT"
+    },
+    {
+      "id": "skill",
+      "name": "gpt_image_2_skill",
+      "file": "gpt-image-2-skill.json",
+      "source_url": "https://github.com/wuyoscar/gpt_image_2_skill",
+      "license": "CC-BY-4.0"
+    }
+  ],
+  "categories": [
+    "portrait_photography",
+    "poster_illustration",
+    "ui_ux_mockup",
+    "character_design",
+    "game_screenshot",
+    "infographic",
+    "product_ecommerce",
+    "anime_manga",
+    "photography",
+    "cinematic_animation",
+    "retro_cyberpunk",
+    "typography",
+    "brand_identity",
+    "architecture_interior",
+    "scientific_educational",
+    "research_paper_figure",
+    "fashion_editorial",
+    "watercolor",
+    "ink_chinese",
+    "pixel_art",
+    "isometric",
+    "food_drink",
+    "other"
+  ]
+}

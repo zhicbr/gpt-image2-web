@@ -2,7 +2,7 @@ export const COPY = {
   zh: {
     tabs: {
       custom: "自定义",
-      customMini: "写",
+      customMini: "自",
       preset: "预设",
       presetMini: "预",
     },
@@ -38,35 +38,12 @@ export const COPY = {
     },
     messages: {
       needPrompt: "请先输入提示词。",
-      presetApplied: "已填入预设。",
       failed: "生成失败。",
       revised: "模型调整了提示词。",
     },
-    presets: {
-      editorial: {
-        label: "杂志感",
-        note: "人物 / 光线 / 构图",
-        prompt:
-          "Editorial portrait of a young designer in a quiet studio, clean composition, soft window light, refined textures, minimal background, sharp details, subtle cinematic tone.",
-      },
-      product: {
-        label: "产品图",
-        note: "材质 / 反射 / 质感",
-        prompt:
-          "Minimal product render of a matte black wireless speaker on a stone pedestal, soft reflections, studio lighting, crisp edges, premium material detail, calm composition.",
-      },
-      poster: {
-        label: "海报",
-        note: "氛围 / 主体 / 标题",
-        prompt:
-          "Minimal poster of a silver train cutting through dense winter fog, centered composition, strong negative space, restrained palette, elegant title placement, cinematic atmosphere.",
-      },
-      diagram: {
-        label: "信息图",
-        note: "结构 / 标签 / 层级",
-        prompt:
-          "Minimal infographic showing the layers of a launch vehicle, precise labeling, clean hierarchy, flat background, technical clarity, publication-ready layout.",
-      },
+    preset: {
+      restore: "还原",
+      sourceLink: "来源仓库",
     },
   },
   en: {
@@ -108,35 +85,12 @@ export const COPY = {
     },
     messages: {
       needPrompt: "Enter a prompt first.",
-      presetApplied: "Preset loaded.",
       failed: "Generation failed.",
       revised: "Prompt revised by model.",
     },
-    presets: {
-      editorial: {
-        label: "Editorial",
-        note: "subject / light / framing",
-        prompt:
-          "Editorial portrait of a young designer in a quiet studio, clean composition, soft window light, refined textures, minimal background, sharp details, subtle cinematic tone.",
-      },
-      product: {
-        label: "Product",
-        note: "surface / reflection / detail",
-        prompt:
-          "Minimal product render of a matte black wireless speaker on a stone pedestal, soft reflections, studio lighting, crisp edges, premium material detail, calm composition.",
-      },
-      poster: {
-        label: "Poster",
-        note: "mood / subject / title",
-        prompt:
-          "Minimal poster of a silver train cutting through dense winter fog, centered composition, strong negative space, restrained palette, elegant title placement, cinematic atmosphere.",
-      },
-      diagram: {
-        label: "Diagram",
-        note: "structure / labels / hierarchy",
-        prompt:
-          "Minimal infographic showing the layers of a launch vehicle, precise labeling, clean hierarchy, flat background, technical clarity, publication-ready layout.",
-      },
+    preset: {
+      restore: "Reset",
+      sourceLink: "Source repo",
     },
   },
 };

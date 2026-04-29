@@ -973,6 +973,33 @@ a {
     padding: 10px 12px;
   }
 
+  .sidebar-body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+
+  .sidebar-body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  .panel-stack {
+    height: auto;
+    min-height: 0;
+  }
+
+  .prompt-block {
+    flex: none;
+    min-height: 180px;
+  }
+
+  .custom-prompt-input {
+    min-height: 120px;
+    flex: none;
+  }
+
   .icon-button,
   .tab-button,
   .chip-button,

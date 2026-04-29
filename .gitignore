@@ -5,3 +5,4 @@ server.err.log
 server.runtime.log
 server.pid
 node_modules/
+public/

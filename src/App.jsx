@@ -141,6 +141,8 @@ export default function App() {
   const [activePresetId, setActivePresetId] = useState(null);
   const [presetDrafts, setPresetDrafts] = useState({});
   const [presetSourceItems, setPresetSourceItems] = useState([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   const t = COPY[lang];
   const suggestionGroups = useMemo(() => buildSuggestionGroups(t), [t]);
@@ -279,6 +281,19 @@ export default function App() {
     if (sourceId === presetSourceId) return;
     setPresetSourceId(sourceId);
     setPresetPage(0);
+  }
+
+  function toggleSidebar() {
+    setSidebarOpen((prev) => !prev);
+    setShowSettings(false);
+  }
+
+  function closeSidebar() {
+    setSidebarOpen(false);
+  }
+
+  function toggleCollapsed() {
+    setCollapsed((current) => !current);
   }
 
   function stepPresetPage(direction) {
@@ -662,13 +677,26 @@ export default function App() {
 
   return (
     <div className={`app-shell${collapsed ? " is-collapsed" : ""}`}>
-      <aside className="sidebar">
+      <div
+        className={`sidebar-backdrop${sidebarOpen ? " is-visible" : ""}`}
+        onClick={closeSidebar}
+      ></div>
+
+      <aside className={`sidebar${sidebarOpen ? " is-open" : ""}`}>
         <div className="sidebar-top">
           <div className="sidebar-top-spacer"></div>
           <button
-            className="icon-button"
+            className="icon-button sidebar-toggle-btn"
             type="button"
-            onClick={() => setCollapsed((current) => !current)}
+            onClick={toggleSidebar}
+            aria-label={sidebarOpen ? "close sidebar" : "open sidebar"}
+          >
+            {sidebarOpen ? "<" : ">"}
+          </button>
+          <button
+            className="icon-button sidebar-collapse-btn"
+            type="button"
+            onClick={toggleCollapsed}
             aria-label={collapsed ? "expand" : "collapse"}
           >
             {collapsed ? ">" : "<"}
@@ -681,14 +709,14 @@ export default function App() {
             type="button"
             onClick={() => setTab("custom")}
           >
-            {collapsed ? t.tabs.customMini : t.tabs.custom}
+            {collapsed && !sidebarOpen ? t.tabs.customMini : t.tabs.custom}
           </button>
           <button
             className={`tab-button${tab === "preset" ? " is-active" : ""}`}
             type="button"
             onClick={() => setTab("preset")}
           >
-            {collapsed ? t.tabs.presetMini : t.tabs.preset}
+            {collapsed && !sidebarOpen ? t.tabs.presetMini : t.tabs.preset}
           </button>
         </div>
 
@@ -757,57 +785,68 @@ export default function App() {
           <div className={`status-dot ${status}`}></div>
 
           <div className="bar-actions">
-            <div className="swatch-wrap">
-              {THEME_OPTIONS.map((theme) => (
+            <button
+              className="icon-button settings-toggle"
+              type="button"
+              onClick={() => setShowSettings((prev) => !prev)}
+              aria-label="Settings"
+            >
+              &#9881;
+            </button>
+
+            <div className={`settings-group${showSettings ? " is-open" : ""}`}>
+              <div className="swatch-wrap">
+                {THEME_OPTIONS.map((theme) => (
+                  <button
+                    key={theme}
+                    className={`swatch-button ${theme}${accent === theme ? " is-active" : ""}`}
+                    type="button"
+                    onClick={() => setAccent(theme)}
+                    aria-label={theme}
+                  ></button>
+                ))}
+              </div>
+
+              <div className="switch-wrap mode-switch">
                 <button
-                  key={theme}
-                  className={`swatch-button ${theme}${accent === theme ? " is-active" : ""}`}
+                  className={`toggle-button toggle-button-mode${mode === "system" ? " is-active" : ""}`}
                   type="button"
-                  onClick={() => setAccent(theme)}
-                  aria-label={theme}
-                ></button>
-              ))}
-            </div>
+                  onClick={() => setMode("system")}
+                >
+                  {t.top.system}
+                </button>
+                <button
+                  className={`toggle-button toggle-button-mode${mode === "light" ? " is-active" : ""}`}
+                  type="button"
+                  onClick={() => setMode("light")}
+                >
+                  {t.top.light}
+                </button>
+                <button
+                  className={`toggle-button toggle-button-mode${mode === "dark" ? " is-active" : ""}`}
+                  type="button"
+                  onClick={() => setMode("dark")}
+                >
+                  {t.top.dark}
+                </button>
+              </div>
 
-            <div className="switch-wrap mode-switch">
-              <button
-                className={`toggle-button toggle-button-mode${mode === "system" ? " is-active" : ""}`}
-                type="button"
-                onClick={() => setMode("system")}
-              >
-                {t.top.system}
-              </button>
-              <button
-                className={`toggle-button toggle-button-mode${mode === "light" ? " is-active" : ""}`}
-                type="button"
-                onClick={() => setMode("light")}
-              >
-                {t.top.light}
-              </button>
-              <button
-                className={`toggle-button toggle-button-mode${mode === "dark" ? " is-active" : ""}`}
-                type="button"
-                onClick={() => setMode("dark")}
-              >
-                {t.top.dark}
-              </button>
-            </div>
-
-            <div className="switch-wrap lang-switch">
-              <button
-                className={`toggle-button toggle-button-lang${lang === "zh" ? " is-active" : ""}`}
-                type="button"
-                onClick={() => setLang("zh")}
-              >
-                中
-              </button>
-              <button
-                className={`toggle-button toggle-button-lang${lang === "en" ? " is-active" : ""}`}
-                type="button"
-                onClick={() => setLang("en")}
-              >
-                EN
-              </button>
+              <div className="switch-wrap lang-switch">
+                <button
+                  className={`toggle-button toggle-button-lang${lang === "zh" ? " is-active" : ""}`}
+                  type="button"
+                  onClick={() => setLang("zh")}
+                >
+                  中
+                </button>
+                <button
+                  className={`toggle-button toggle-button-lang${lang === "en" ? " is-active" : ""}`}
+                  type="button"
+                  onClick={() => setLang("en")}
+                >
+                  EN
+                </button>
+              </div>
             </div>
 
             <button className="primary-button" type="button" onClick={handleGenerate} disabled={isLoading}>

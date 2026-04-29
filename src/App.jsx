@@ -342,9 +342,7 @@ export default function App() {
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           prompt: tab === "preset" ? presetPrompt : buildComposedPrompt(),
           outputFormat: form.outputFormat,
@@ -352,16 +350,30 @@ export default function App() {
         }),
       });
 
-      const json = await response.json();
       if (!response.ok) {
-        throw new Error(json.error || t.messages.failed);
+        let errorMsg = t.messages.failed;
+        try {
+          const errJson = await response.json();
+          errorMsg = errJson.error || errJson.message || errorMsg;
+        } catch {}
+        throw new Error(errorMsg);
       }
 
-      const image = Array.isArray(json.images) ? json.images[0] : null;
-      if (!image) {
+      const contentType = response.headers.get("Content-Type") || "";
+      if (!contentType.includes("text/event-stream")) {
+        const json = await response.json();
+        if (json.error) throw new Error(json.error);
         throw new Error(t.messages.failed);
       }
 
+      const images = [];
+      const revisedPrompt = await parseImageStream(response, (image) => images.push(image));
+
+      if (!images.length) {
+        throw new Error(t.messages.failed);
+      }
+
+      const image = images[0];
       const mimeType = image.mimeType || "image/png";
       const src = image.base64 ? `data:${mimeType};base64,${image.base64}` : image.url;
 
@@ -371,13 +383,63 @@ export default function App() {
         downloadName: buildDownloadName(mimeType),
       });
       setStatus("success");
-      setMessage(image.revisedPrompt ? t.messages.revised : "");
+      setMessage(revisedPrompt ? t.messages.revised : "");
     } catch (error) {
       setStatus("error");
       setResult(null);
       setMessage(error?.message || t.messages.failed);
     } finally {
       setIsLoading(false);
+    }
+  }
+
+  async function parseImageStream(response, onImage) {
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let revisedPrompt = null;
+
+    while (true) {
+      const { value, done } = await reader.read();
+      if (value) buffer += decoder.decode(value, { stream: true });
+      const frames = buffer.split(/\r?\n\r?\n/);
+      buffer = frames.pop() || "";
+
+      for (const frame of frames) {
+        const event = parseSseFrame(frame);
+        if (!event) continue;
+
+        if (event.type === "response.output_item.done" && event.item?.type === "image_generation_call") {
+          if (typeof event.item.result === "string" && event.item.result.length) {
+            onImage({
+              id: 1,
+              mimeType: `image/${form.outputFormat === "jpeg" ? "jpeg" : form.outputFormat}`,
+              base64: event.item.result,
+            });
+            if (event.item.revised_prompt) revisedPrompt = event.item.revised_prompt;
+          }
+        }
+      }
+
+      if (done) break;
+    }
+
+    return revisedPrompt;
+  }
+
+  function parseSseFrame(frame) {
+    const lines = frame.split(/\r?\n/);
+    const dataLines = [];
+    for (const line of lines) {
+      if (line.startsWith("data:")) dataLines.push(line.slice(5).trimStart());
+    }
+    if (!dataLines.length) return null;
+    const payload = dataLines.join("\n").trim();
+    if (!payload || payload === "[DONE]") return null;
+    try {
+      return JSON.parse(payload);
+    } catch {
+      return null;
     }
   }
 

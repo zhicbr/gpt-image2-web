@@ -1,12 +1,11 @@
 import { createServer } from "node:http";
-import { appendFileSync, createReadStream, existsSync, readFileSync } from "node:fs";
+import { createReadStream, existsSync, readFileSync } from "node:fs";
 import { dirname, extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const publicDir = join(__dirname, "public");
-const runtimeLogPath = join(__dirname, "server.runtime.log");
 
 loadLocalEnv(join(__dirname, ".env"));
 
@@ -78,15 +77,6 @@ async function readJsonBody(req) {
 
 function cleanString(value, fallback = "") {
   return typeof value === "string" ? value.trim() : fallback;
-}
-
-function logRuntime(event, details = {}) {
-  const line = JSON.stringify({
-    ts: new Date().toISOString(),
-    event,
-    ...details,
-  });
-  appendFileSync(runtimeLogPath, `${line}\n`, "utf8");
 }
 
 function validateGenerateInput(input) {
@@ -327,7 +317,6 @@ async function collectJsonResponse(upstream, outputFormat) {
 
 async function handleGenerate(req, res) {
   if (!apiKey) {
-    logRuntime("generate.reject", { reason: "missing_api_key" });
     return sendJson(res, 500, {
       error: "OPENAI_API_KEY is missing. Add it to your environment before starting the server.",
     });
@@ -337,23 +326,13 @@ async function handleGenerate(req, res) {
   try {
     input = await readJsonBody(req);
   } catch (error) {
-    logRuntime("generate.bad_json", { message: error.message || "Invalid JSON body" });
     return sendJson(res, 400, { error: error.message || "Invalid JSON body." });
   }
 
   const validated = validateGenerateInput(input);
   if (validated.error) {
-    logRuntime("generate.bad_request", { message: validated.error });
     return sendJson(res, 400, { error: validated.error });
   }
-
-  logRuntime("generate.request", {
-    promptChars: validated.prompt.length,
-    outputFormat: validated.outputFormat,
-    n: validated.n,
-    model: responsesModel,
-    responsesUrl: buildResponsesUrl(),
-  });
 
   try {
     const upstream = await fetch(buildResponsesUrl(), {
@@ -379,11 +358,6 @@ async function handleGenerate(req, res) {
         parsed?.message ||
         parsed?.raw ||
         "Responses image generation failed.";
-      logRuntime("generate.upstream_error", {
-        status: upstream.status,
-        message: errorMessage,
-        details: parsed?.error || parsed,
-      });
       return sendJson(res, upstream.status, {
         error: errorMessage,
         details: parsed?.error || parsed,
@@ -402,12 +376,6 @@ async function handleGenerate(req, res) {
         typeof parsedResult.rawText === "string" && parsedResult.rawText.length
           ? parsedResult.rawText.slice(0, 1200)
           : null;
-      logRuntime("generate.no_image_call", {
-        message: errorMessage,
-        eventTypes: parsedResult.eventTypes,
-        contentType,
-        rawPreview,
-      });
       return sendJson(res, 502, {
         error: errorMessage,
         details: {
@@ -418,20 +386,11 @@ async function handleGenerate(req, res) {
       });
     }
 
-    logRuntime("generate.success", {
-      imageCount: parsedResult.images.length,
-      contentType,
-      eventTypes: parsedResult.eventTypes,
-    });
     return sendJson(res, 200, {
       created: Date.now(),
       images: parsedResult.images,
     });
   } catch (error) {
-    logRuntime("generate.fetch_failed", {
-      message: error.message || "Failed to reach OpenAI.",
-      cause: error.cause?.message || null,
-    });
     return sendJson(res, 502, {
       error: error.message || "Failed to reach OpenAI.",
     });
@@ -457,10 +416,6 @@ const server = createServer(async (req, res) => {
   }
 
   const requestUrl = new URL(req.url, `http://${req.headers.host || "localhost"}`);
-  logRuntime("http.request", {
-    method: req.method,
-    path: requestUrl.pathname,
-  });
 
   if (req.method === "GET" && requestUrl.pathname === "/api/health") {
     return sendJson(res, 200, {
@@ -484,28 +439,8 @@ const server = createServer(async (req, res) => {
 });
 
 server.listen(port, () => {
-  logRuntime("server.listen", {
-    port,
-    openaiBaseUrl,
-    responsesUrl: buildResponsesUrl(),
-    model: responsesModel,
-    hasApiKey: Boolean(apiKey),
-  });
   console.log(`gpt-image2-web listening on http://localhost:${port}`);
   if (!apiKey) {
     console.warn("OPENAI_API_KEY is not set. The UI will load, but generation requests will fail.");
   }
-});
-
-process.on("uncaughtException", (error) => {
-  logRuntime("process.uncaught_exception", {
-    message: error.message,
-    stack: error.stack,
-  });
-});
-
-process.on("unhandledRejection", (reason) => {
-  logRuntime("process.unhandled_rejection", {
-    reason: typeof reason === "object" && reason ? JSON.stringify(reason) : String(reason),
-  });
 });

@@ -21,7 +21,7 @@
                          "images":  [
                                         {
                                             "url":  "Relative path in docs/ directory of the repo",
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "local_path":  null
                                         }
                                     ],
@@ -29,7 +29,7 @@
                                              "author":  "Author handle or \u0027Curated\u0027 for repo-authored prompts",
                                              "author_url":  "Author URL on X/Reddit/etc. Null if Curated.",
                                              "source_url":  "Source URL if from external community. Null if Curated.",
-                                             "source_id":  "skill"
+                                             "source_id":  "wuyoscar"
                                          },
                          "metadata":  {
                                           "like_count":  null,
@@ -58,7 +58,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -80,7 +80,7 @@
                                        {
                                            "url":  "docs/anime-manga/anime-jjk-action.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -101,7 +101,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -123,7 +123,7 @@
                                        {
                                            "url":  "docs/anime-manga/anime-naruto-clash.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -144,7 +144,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -166,7 +166,7 @@
                                        {
                                            "url":  "docs/anime-manga/manga-spread.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -187,7 +187,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/cht0001",
                                             "author":  "@cht0001",
                                             "source_url":  "https://x.com/cht0001"
@@ -209,7 +209,7 @@
                                        {
                                            "url":  "docs/anime-manga/manga-relationship.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -230,7 +230,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://mp.weixin.qq.com/s/ASxig6mFVYxrIE8-8Fthew",
                                             "author":  "Unknown",
                                             "source_url":  "https://mp.weixin.qq.com/s/ASxig6mFVYxrIE8-8Fthew"
@@ -252,7 +252,7 @@
                                        {
                                            "url":  "docs/anime-manga/anime-expression-grid.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -273,7 +273,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -295,7 +295,7 @@
                                        {
                                            "url":  "docs/anime-manga/anime-cafe-stockings-fashion.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -316,7 +316,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -338,7 +338,7 @@
                                        {
                                            "url":  "docs/anime-manga/anime-arcade-stockings-fashion.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -359,7 +359,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -381,7 +381,7 @@
                                        {
                                            "url":  "docs/anime-manga/anime-girls-sweet-group.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -402,7 +402,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -424,7 +424,7 @@
                                        {
                                            "url":  "docs/anime-manga/anime-ten-panel-character-grid.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -445,7 +445,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -467,7 +467,7 @@
                                        {
                                            "url":  "docs/anime-manga/tide-brothers-19-page-manga.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "tall",
@@ -488,7 +488,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -510,7 +510,7 @@
                                        {
                                            "url":  "docs/anime-manga/anime-roadside-mirror-fashion.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -531,7 +531,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -553,7 +553,7 @@
                                        {
                                            "url":  "docs/anime-manga/anime-rainy-bus-stop-mirror.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -574,7 +574,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -596,7 +596,7 @@
                                        {
                                            "url":  "docs/architecture-interior/japanese-minimalist-living-room-render.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -617,7 +617,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -639,7 +639,7 @@
                                        {
                                            "url":  "docs/architecture-interior/brutalist-concrete-museum-atrium.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -660,7 +660,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -682,7 +682,7 @@
                                        {
                                            "url":  "docs/architecture-interior/mid-century-modern-office-studio.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -703,7 +703,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -725,7 +725,7 @@
                                        {
                                            "url":  "docs/architecture-interior/biophilic-biotech-lab-render.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -746,7 +746,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -768,7 +768,7 @@
                                        {
                                            "url":  "docs/architecture-interior/gothic-cathedral-interior-render.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "tall",
@@ -789,7 +789,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -811,7 +811,7 @@
                                        {
                                            "url":  "docs/beauty-lifestyle/skincare-morning-routine-tray.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -832,7 +832,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -854,7 +854,7 @@
                                        {
                                            "url":  "docs/beauty-lifestyle/fragrance-evening-ritual-vanity.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -875,7 +875,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/LexnLin/status/2046952493213429886",
                                             "author":  "@LexnLin",
                                             "source_url":  "https://x.com/LexnLin/status/2046952493213429886"
@@ -897,7 +897,7 @@
                                        {
                                            "url":  "docs/brand-systems-identity/brand-identity-moss-radio.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -918,7 +918,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/den_turbin/status/2046863385791467773",
                                             "author":  "@den_turbin",
                                             "source_url":  "https://x.com/den_turbin/status/2046863385791467773"
@@ -940,7 +940,7 @@
                                        {
                                            "url":  "docs/brand-systems-identity/ps1-reboot-brand-kit.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -961,7 +961,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/aleenaamiir/status/2047207315976368584",
                                             "author":  "@aleenaamiir",
                                             "source_url":  "https://x.com/aleenaamiir/status/2047207315976368584"
@@ -983,7 +983,7 @@
                                        {
                                            "url":  "docs/brand-systems-identity/playful-brand-kit-mochi-metro.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -1004,7 +1004,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/MANISH1027512",
                                             "author":  "@MANISH1027512",
                                             "source_url":  "https://x.com/MANISH1027512"
@@ -1026,7 +1026,7 @@
                                        {
                                            "url":  "docs/character-design/character-sheet.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -1047,7 +1047,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.reddit.com/r/midjourney/comments/1jrcpan/fantasy_concept_arts_with_v7_prompts_included/",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.reddit.com/r/midjourney/comments/1jrcpan/fantasy_concept_arts_with_v7_prompts_included/"
@@ -1069,7 +1069,7 @@
                                        {
                                            "url":  "docs/character-design/elven-archer-sheet.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -1090,7 +1090,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1112,7 +1112,7 @@
                                        {
                                            "url":  "docs/cinematic-animation/pixar-kitchen.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -1133,7 +1133,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1155,7 +1155,7 @@
                                        {
                                            "url":  "docs/cinematic-animation/noir-detective.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -1176,7 +1176,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1198,7 +1198,7 @@
                                        {
                                            "url":  "docs/cinematic-animation/storyboard.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -1219,7 +1219,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1241,7 +1241,7 @@
                                        {
                                            "url":  "docs/cinematic-animation/ghibli-cottage.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -1262,7 +1262,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.reddit.com/r/ChatGPT/comments/1jk0p3v/tried_to_push_the_new_image_model_with_an/",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.reddit.com/r/ChatGPT/comments/1jk0p3v/tried_to_push_the_new_image_model_with_an/"
@@ -1284,7 +1284,7 @@
                                        {
                                            "url":  "docs/cinematic-animation/vhs-grocery-chaos.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -1305,7 +1305,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1327,7 +1327,7 @@
                                        {
                                            "url":  "docs/cinematic-film-references/anderson-symmetric-pastel-hotel.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -1348,7 +1348,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1370,7 +1370,7 @@
                                        {
                                            "url":  "docs/cinematic-film-references/villeneuve-monolithic-desert.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -1391,7 +1391,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1413,7 +1413,7 @@
                                        {
                                            "url":  "docs/cinematic-film-references/miyazaki-floating-island-garden.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -1434,7 +1434,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1456,7 +1456,7 @@
                                        {
                                            "url":  "docs/cinematic-film-references/tarkovsky-misty-dacha-morning.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -1477,7 +1477,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1499,7 +1499,7 @@
                                        {
                                            "url":  "docs/cinematic-film-references/blade-runner-neo-noir-orange.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -1520,7 +1520,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1542,7 +1542,7 @@
                                        {
                                            "url":  "docs/cinematic-film-references/expressionist-noir-clockwork-alley.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -1563,7 +1563,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1585,7 +1585,7 @@
                                        {
                                            "url":  "docs/data-visualization/small-multiples-climate-grid.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -1606,7 +1606,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1628,7 +1628,7 @@
                                        {
                                            "url":  "docs/data-visualization/network-graph-collaboration-map.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -1649,7 +1649,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1671,7 +1671,7 @@
                                        {
                                            "url":  "docs/data-visualization/chord-diagram-energy-flows.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -1692,7 +1692,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1714,7 +1714,7 @@
                                        {
                                            "url":  "docs/data-visualization/treemap-startup-budget-allocation.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -1735,7 +1735,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1757,7 +1757,7 @@
                                        {
                                            "url":  "docs/data-visualization/geographic-choropleth-harvest-yield.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -1778,7 +1778,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://github.com/openai/openai-cookbook/blob/main/examples/multimodal/image-gen-models-prompting-guide.ipynb",
                                             "author":  "OpenAI",
                                             "source_url":  "https://github.com/openai/openai-cookbook/blob/main/examples/multimodal/image-gen-models-prompting-guide.ipynb"
@@ -1800,7 +1800,7 @@
                                        {
                                            "url":  null,
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -1821,7 +1821,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1843,7 +1843,7 @@
                                        {
                                            "url":  "docs/edit-endpoint-showcase/tea-poster-metro-lightbox.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -1864,7 +1864,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1886,7 +1886,7 @@
                                        {
                                            "url":  "docs/events-experience/zoo-visitor-wayfinding-map.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -1907,7 +1907,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1929,7 +1929,7 @@
                                        {
                                            "url":  "docs/events-experience/huashan-5a-scenic-wayfinding-map.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -1950,7 +1950,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -1972,7 +1972,7 @@
                                        {
                                            "url":  "docs/fashion-editorial/streetwear-tokyo-lookbook.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -1993,7 +1993,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -2015,7 +2015,7 @@
                                        {
                                            "url":  "docs/fashion-editorial/haute-couture-sculptural-runway.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "tall",
@@ -2036,7 +2036,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -2058,7 +2058,7 @@
                                        {
                                            "url":  "docs/fashion-editorial/y2k-revival-cyber-pop.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -2079,7 +2079,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -2101,7 +2101,7 @@
                                        {
                                            "url":  "docs/fashion-editorial/old-money-equestrian-estate.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -2122,7 +2122,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -2144,7 +2144,7 @@
                                        {
                                            "url":  "docs/fashion-editorial/avant-garde-organic-high-fashion.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -2165,7 +2165,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/john_my07/status/2047182640760140198",
                                             "author":  "@john_my07",
                                             "source_url":  "https://x.com/john_my07/status/2047182640760140198"
@@ -2187,7 +2187,7 @@
                                        {
                                            "url":  "docs/fashion-editorial/editorial-studio-portrait.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -2208,7 +2208,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/Sheldon056/status/2047157379020861782",
                                             "author":  "@Sheldon056",
                                             "source_url":  "https://x.com/Sheldon056/status/2047157379020861782"
@@ -2230,7 +2230,7 @@
                                        {
                                            "url":  "docs/fashion-editorial/eiffel-tower-luxury-editorial.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -2251,7 +2251,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -2273,7 +2273,7 @@
                                        {
                                            "url":  "docs/fine-art-painting/impasto-floral-swirls.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -2294,7 +2294,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -2316,7 +2316,7 @@
                                        {
                                            "url":  "docs/fine-art-painting/impressionist-river-dusk.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -2337,7 +2337,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -2359,7 +2359,7 @@
                                        {
                                            "url":  "docs/fine-art-painting/hockney-california-backyard.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -2380,7 +2380,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -2402,7 +2402,7 @@
                                        {
                                            "url":  "docs/fine-art-painting/rothko-color-field-meditation.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "tall",
@@ -2423,7 +2423,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -2445,7 +2445,7 @@
                                        {
                                            "url":  "docs/fine-art-painting/rivera-social-industrial-mural.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -2466,7 +2466,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/flowersslop",
                                             "author":  "@flowersslop",
                                             "source_url":  "https://x.com/flowersslop"
@@ -2488,7 +2488,7 @@
                                        {
                                            "url":  "docs/gaming/hitman-openai.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -2509,7 +2509,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/WolfRiccardo",
                                             "author":  "@WolfRiccardo",
                                             "source_url":  "https://x.com/WolfRiccardo"
@@ -2531,7 +2531,7 @@
                                        {
                                            "url":  "docs/gaming/gta6-beach.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -2552,7 +2552,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -2574,7 +2574,7 @@
                                        {
                                            "url":  "docs/gaming/dark-fantasy-hunt.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -2595,7 +2595,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -2617,7 +2617,7 @@
                                        {
                                            "url":  "docs/gaming/epic-fellowship-bridge.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -2638,7 +2638,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.reddit.com/r/midjourney/comments/1kozn4u/retro_video_games_in_japan_prompts_included/",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.reddit.com/r/midjourney/comments/1kozn4u/retro_video_games_in_japan_prompts_included/"
@@ -2660,7 +2660,7 @@
                                        {
                                            "url":  "docs/gaming/retro-japan-rpg.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -2681,7 +2681,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.reddit.com/r/midjourney/comments/1kzzy77/cyberpunk_video_games_in_european_cities_prompts/",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.reddit.com/r/midjourney/comments/1kzzy77/cyberpunk_video_games_in_european_cities_prompts/"
@@ -2703,7 +2703,7 @@
                                        {
                                            "url":  "docs/gaming/cyberpunk-europe-action.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -2724,7 +2724,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.reddit.com/r/midjourney/comments/1lh2l98/anime_style_video_games_prompts_included/",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.reddit.com/r/midjourney/comments/1lh2l98/anime_style_video_games_prompts_included/"
@@ -2746,7 +2746,7 @@
                                        {
                                            "url":  "docs/gaming/anime-open-world.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -2767,7 +2767,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -2789,7 +2789,7 @@
                                        {
                                            "url":  "docs/gaming/mobile-moba-arena-hud.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -2810,7 +2810,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.reddit.com/r/midjourney/comments/1l2d5dr/lowpoly_strategy_video_games_in_japan_prompts/",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.reddit.com/r/midjourney/comments/1l2d5dr/lowpoly_strategy_video_games_in_japan_prompts/"
@@ -2832,7 +2832,7 @@
                                        {
                                            "url":  "docs/gaming/lowpoly-samurai-strategy.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -2853,7 +2853,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/aleenaamiir/status/2046866168208916503",
                                             "author":  "@aleenaamiir",
                                             "source_url":  "https://x.com/aleenaamiir/status/2046866168208916503"
@@ -2875,7 +2875,7 @@
                                        {
                                            "url":  "docs/gaming/worldbuilding-nine-panel-set.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -2896,7 +2896,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/WolfRiccardo",
                                             "author":  "@WolfRiccardo",
                                             "source_url":  "https://x.com/WolfRiccardo"
@@ -2918,7 +2918,7 @@
                                        {
                                            "url":  "docs/illustration/amalfi-poster.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -2939,7 +2939,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -2961,7 +2961,7 @@
                                        {
                                            "url":  "docs/illustration/papercut-forest-market.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -2982,7 +2982,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/Panda20230902",
                                             "author":  "@Panda20230902",
                                             "source_url":  "https://x.com/Panda20230902"
@@ -3004,7 +3004,7 @@
                                        {
                                            "url":  "docs/infographics-field-guides/song-dynasty-feed.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -3025,7 +3025,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/MrLarus",
                                             "author":  "@MrLarus",
                                             "source_url":  "https://x.com/MrLarus"
@@ -3047,7 +3047,7 @@
                                        {
                                            "url":  "docs/infographics-field-guides/museum-infographic.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -3068,7 +3068,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/MrLarus",
                                             "author":  "@MrLarus",
                                             "source_url":  "https://x.com/MrLarus"
@@ -3090,7 +3090,7 @@
                                        {
                                            "url":  "docs/infographics-field-guides/encyclopedia-panda.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -3111,7 +3111,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.xiaohongshu.com/explore/69e8cd0d0000000023007215",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.xiaohongshu.com/explore/69e8cd0d0000000023007215"
@@ -3133,7 +3133,7 @@
                                        {
                                            "url":  "docs/infographics-field-guides/seoul-travel-guide.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -3154,7 +3154,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.xiaohongshu.com/explore/69e832170000000023012116",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.xiaohongshu.com/explore/69e832170000000023012116"
@@ -3176,7 +3176,7 @@
                                        {
                                            "url":  "docs/infographics-field-guides/snow-leopard-encyclopedia-card.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -3197,7 +3197,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.xiaohongshu.com/explore/69e8eeed0000000021004a54",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.xiaohongshu.com/explore/69e8eeed0000000021004a54"
@@ -3219,7 +3219,7 @@
                                        {
                                            "url":  "docs/infographics-field-guides/cooking-tutorial-card.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -3240,7 +3240,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/Vtrivedy10/status/2046771959157887014",
                                             "author":  "@Vtrivedy10",
                                             "source_url":  "https://x.com/Vtrivedy10/status/2046771959157887014"
@@ -3262,7 +3262,7 @@
                                        {
                                            "url":  "docs/infographics-field-guides/camera-styles-infographic.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -3283,7 +3283,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/billtheinvestor/status/2047153211560399009",
                                             "author":  "@billtheinvestor",
                                             "source_url":  "https://x.com/billtheinvestor/status/2047153211560399009"
@@ -3305,7 +3305,7 @@
                                        {
                                            "url":  "docs/infographics-field-guides/endangered-animal-chinese-infographic.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -3326,7 +3326,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://github.com/EvoLinkAI/awesome-gpt-image-2-prompts",
                                             "author":  "EvoLinkAI",
                                             "source_url":  "https://github.com/EvoLinkAI/awesome-gpt-image-2-prompts"
@@ -3348,7 +3348,7 @@
                                        {
                                            "url":  "docs/ink-chinese/ink-landscape.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -3369,7 +3369,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -3391,7 +3391,7 @@
                                        {
                                            "url":  "docs/ink-chinese/song-night-market-scroll.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -3412,7 +3412,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://github.com/EvoLinkAI/awesome-gpt-image-2-prompts",
                                             "author":  "EvoLinkAI",
                                             "source_url":  "https://github.com/EvoLinkAI/awesome-gpt-image-2-prompts"
@@ -3434,7 +3434,7 @@
                                        {
                                            "url":  "docs/isometric/isometric-cafe.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -3455,7 +3455,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.reddit.com/r/midjourney/comments/1hkqr4x/isometric_maps_prompts_included/",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.reddit.com/r/midjourney/comments/1hkqr4x/isometric_maps_prompts_included/"
@@ -3477,7 +3477,7 @@
                                        {
                                            "url":  "docs/isometric/isometric-fantasy-village.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -3498,7 +3498,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -3520,7 +3520,7 @@
                                        {
                                            "url":  "docs/more-illustration-styles/flat-design-editorial-wellness.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -3541,7 +3541,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -3563,7 +3563,7 @@
                                        {
                                            "url":  "docs/more-illustration-styles/chibi-kawaii-bakery.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -3584,7 +3584,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -3606,7 +3606,7 @@
                                        {
                                            "url":  "docs/more-illustration-styles/low-poly-mountain-voyage.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -3627,7 +3627,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -3649,7 +3649,7 @@
                                        {
                                            "url":  "docs/more-illustration-styles/holographic-sticker-badge.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -3670,7 +3670,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/aleenaamiir/status/2046875573574877663",
                                             "author":  "@aleenaamiir",
                                             "source_url":  "https://x.com/aleenaamiir/status/2046875573574877663"
@@ -3692,7 +3692,7 @@
                                        {
                                            "url":  "docs/more-illustration-styles/kawaii-sticker-pack-mexico.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -3713,7 +3713,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -3735,7 +3735,7 @@
                                        {
                                            "url":  "docs/more-illustration-styles/risograph-urban-landscape.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -3756,7 +3756,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://github.com/openai/openai-cookbook/blob/main/examples/multimodal/image-gen-models-prompting-guide.ipynb",
                                             "author":  "OpenAI",
                                             "source_url":  "https://github.com/openai/openai-cookbook/blob/main/examples/multimodal/image-gen-models-prompting-guide.ipynb"
@@ -3778,7 +3778,7 @@
                                        {
                                            "url":  "docs/official-openai-cookbook/coffee-infographic.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -3799,7 +3799,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://github.com/openai/openai-cookbook/blob/main/examples/multimodal/image-gen-models-prompting-guide.ipynb",
                                             "author":  "OpenAI",
                                             "source_url":  "https://github.com/openai/openai-cookbook/blob/main/examples/multimodal/image-gen-models-prompting-guide.ipynb"
@@ -3821,7 +3821,7 @@
                                        {
                                            "url":  "docs/official-openai-cookbook/sailor.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -3842,7 +3842,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://github.com/openai/openai-cookbook/blob/main/examples/multimodal/image-gen-models-prompting-guide.ipynb",
                                             "author":  "OpenAI",
                                             "source_url":  "https://github.com/openai/openai-cookbook/blob/main/examples/multimodal/image-gen-models-prompting-guide.ipynb"
@@ -3864,7 +3864,7 @@
                                        {
                                            "url":  "docs/official-openai-cookbook/logo-bakery.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -3885,7 +3885,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://github.com/openai/openai-cookbook/blob/main/examples/multimodal/image-gen-models-prompting-guide.ipynb",
                                             "author":  "OpenAI",
                                             "source_url":  "https://github.com/openai/openai-cookbook/blob/main/examples/multimodal/image-gen-models-prompting-guide.ipynb"
@@ -3907,7 +3907,7 @@
                                        {
                                            "url":  "docs/official-openai-cookbook/comic-pet.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -3928,7 +3928,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/WolfRiccardo",
                                             "author":  "@WolfRiccardo",
                                             "source_url":  "https://x.com/WolfRiccardo"
@@ -3950,7 +3950,7 @@
                                        {
                                            "url":  "docs/photography/photoreal-subway.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -3971,7 +3971,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/patrickassale",
                                             "author":  "@patrickassale",
                                             "source_url":  "https://x.com/patrickassale"
@@ -3993,7 +3993,7 @@
                                        {
                                            "url":  "docs/photography/handwritten-notebook.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4014,7 +4014,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/EddGorenstein",
                                             "author":  "@EddGorenstein",
                                             "source_url":  "https://x.com/EddGorenstein"
@@ -4036,7 +4036,7 @@
                                        {
                                            "url":  "docs/photography/chess-midgame.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4057,7 +4057,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/AIimagined",
                                             "author":  "@AIimagined",
                                             "source_url":  "https://x.com/AIimagined"
@@ -4079,7 +4079,7 @@
                                        {
                                            "url":  "docs/photography/panorama-jungle.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -4100,7 +4100,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/RoundtableSpace",
                                             "author":  "@RoundtableSpace",
                                             "source_url":  "https://x.com/RoundtableSpace"
@@ -4122,7 +4122,7 @@
                                        {
                                            "url":  "docs/pixel-art/pixel-sprite-cars.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -4143,7 +4143,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.reddit.com/r/midjourney/comments/1jmodcx/animated_pixel_art_food_prompts_included/",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.reddit.com/r/midjourney/comments/1jmodcx/animated_pixel_art_food_prompts_included/"
@@ -4165,7 +4165,7 @@
                                        {
                                            "url":  "docs/pixel-art/pixel-breakfast.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -4186,7 +4186,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/Salmaaboukarr",
                                             "author":  "@Salmaaboukarr",
                                             "source_url":  "https://x.com/Salmaaboukarr"
@@ -4208,7 +4208,7 @@
                                        {
                                            "url":  "docs/product-food/product-dieline-box.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -4229,7 +4229,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/mehvishs25",
                                             "author":  "@mehvishs25",
                                             "source_url":  "https://x.com/mehvishs25"
@@ -4251,7 +4251,7 @@
                                        {
                                            "url":  "docs/product-food/product-chocolate-wafer.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -4272,7 +4272,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/ChillaiKalan__",
                                             "author":  "@ChillaiKalan__",
                                             "source_url":  "https://x.com/ChillaiKalan__"
@@ -4294,7 +4294,7 @@
                                        {
                                            "url":  "docs/product-food/food-salad-explosion.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -4315,7 +4315,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.xiaohongshu.com/explore/69e7878300000000230050bb",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.xiaohongshu.com/explore/69e7878300000000230050bb"
@@ -4337,7 +4337,7 @@
                                        {
                                            "url":  "docs/product-food/aurora-oolong-poster.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -4358,7 +4358,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -4380,7 +4380,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/clinical-cohort-flow.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4401,7 +4401,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -4423,7 +4423,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/single-cell-immune-atlas.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4444,7 +4444,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -4466,7 +4466,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/multimodal-medical-ai-method.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4487,7 +4487,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -4509,7 +4509,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/therapeutic-response-bar-forest.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4530,7 +4530,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -4552,7 +4552,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/transformer-arch.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4573,7 +4573,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -4595,7 +4595,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/rag-pipeline.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4616,7 +4616,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -4638,7 +4638,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/agent-architecture.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4659,7 +4659,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -4681,7 +4681,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/diffusion-chain.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4702,7 +4702,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -4724,7 +4724,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/scaling-curves.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4745,7 +4745,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -4767,7 +4767,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/benchmark-heatmap.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4788,7 +4788,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -4810,7 +4810,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/ablation-bars.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4831,7 +4831,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -4853,7 +4853,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/data-sankey.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4874,7 +4874,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -4896,7 +4896,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/attention-heatmap.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4917,7 +4917,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -4939,7 +4939,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/model-timeline.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -4960,7 +4960,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -4982,7 +4982,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/react-trace.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -5003,7 +5003,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5025,7 +5025,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/memory-router-figure.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -5046,7 +5046,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5068,7 +5068,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/frontier-safety-eval-loop.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -5089,7 +5089,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.xiaohongshu.com/explore/69d396140000000023012282",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.xiaohongshu.com/explore/69d396140000000023012282"
@@ -5111,7 +5111,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/hmr-iclr-figure.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -5132,7 +5132,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.xiaohongshu.com/explore/67e414010000000007037315",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.xiaohongshu.com/explore/67e414010000000007037315"
@@ -5154,7 +5154,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/llm-agent-research-illustration.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -5175,7 +5175,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.xiaohongshu.com/explore/69e997a90000000022027c30",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.xiaohongshu.com/explore/69e997a90000000022027c30"
@@ -5197,7 +5197,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/multimodal-agent-experiment-workflow.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -5218,7 +5218,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5240,7 +5240,7 @@
                                        {
                                            "url":  "docs/research-paper-figures/prompt-injection-flow.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -5261,7 +5261,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://github.com/EvoLinkAI/awesome-gpt-image-2-prompts",
                                             "author":  "EvoLinkAI",
                                             "source_url":  "https://github.com/EvoLinkAI/awesome-gpt-image-2-prompts"
@@ -5283,7 +5283,7 @@
                                        {
                                            "url":  "docs/retro-cyberpunk/cyberpunk-mecha.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -5304,7 +5304,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5326,7 +5326,7 @@
                                        {
                                            "url":  "docs/retro-cyberpunk/neon-orchid-district-board.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -5347,7 +5347,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5369,7 +5369,7 @@
                                        {
                                            "url":  "docs/retro-cyberpunk/synth-moon-crew-grid.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -5390,7 +5390,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5412,7 +5412,7 @@
                                        {
                                            "url":  "docs/scientific-educational/human-anatomy-muscular-poster.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "tall",
@@ -5433,7 +5433,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5455,7 +5455,7 @@
                                        {
                                            "url":  "docs/scientific-educational/human-anatomy-skeletal-poster.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "tall",
@@ -5476,7 +5476,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5498,7 +5498,7 @@
                                        {
                                            "url":  "docs/scientific-educational/human-anatomy-circulatory-poster.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "tall",
@@ -5519,7 +5519,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5541,7 +5541,7 @@
                                        {
                                            "url":  "docs/scientific-educational/periodic-table-spectral-variant.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -5562,7 +5562,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5584,7 +5584,7 @@
                                        {
                                            "url":  "docs/scientific-educational/tree-of-life-phylogeny-poster.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -5605,7 +5605,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5627,7 +5627,7 @@
                                        {
                                            "url":  "docs/scientific-educational/weather-systems-fronts-diagram.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -5648,7 +5648,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5670,7 +5670,7 @@
                                        {
                                            "url":  "docs/scientific-educational/geological-strata-cross-section.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -5691,7 +5691,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5713,7 +5713,7 @@
                                        {
                                            "url":  "docs/screen-photography/laptop-music-webcam-screen.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "1152x1536",
@@ -5734,7 +5734,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5756,7 +5756,7 @@
                                        {
                                            "url":  "docs/screen-photography/laptop-notes-facetime-screen.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "1152x1536",
@@ -5777,7 +5777,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5799,7 +5799,7 @@
                                        {
                                            "url":  "docs/tattoo-design/realistic-black-grey-sleeve-study.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -5820,7 +5820,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5842,7 +5842,7 @@
                                        {
                                            "url":  "docs/tattoo-design/color-neo-traditional-fox-flora.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -5863,7 +5863,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5885,7 +5885,7 @@
                                        {
                                            "url":  "docs/tattoo-design/japanese-traditional-dragon-koi.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -5906,7 +5906,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5928,7 +5928,7 @@
                                        {
                                            "url":  "docs/tattoo-design/dark-surrealist-moth-cathedral.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -5949,7 +5949,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -5971,7 +5971,7 @@
                                        {
                                            "url":  "docs/technical-illustration/mechanical-watch-exploded-view.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -5992,7 +5992,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -6014,7 +6014,7 @@
                                        {
                                            "url":  "docs/technical-illustration/rocket-cutaway-launch-vehicle.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "tall",
@@ -6035,7 +6035,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -6057,7 +6057,7 @@
                                        {
                                            "url":  "docs/technical-illustration/mechanical-keyboard-exploded-assembly.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "wide",
@@ -6078,7 +6078,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -6100,7 +6100,7 @@
                                        {
                                            "url":  "docs/technical-illustration/car-powertrain-transparent-cutaway.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -6121,7 +6121,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -6143,7 +6143,7 @@
                                        {
                                            "url":  "docs/technical-illustration/smartphone-internals-layered-view.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6164,7 +6164,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -6186,7 +6186,7 @@
                                        {
                                            "url":  "docs/typography-posters/tea-poster.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6207,7 +6207,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/akokoi1",
                                             "author":  "@akokoi1",
                                             "source_url":  "https://x.com/akokoi1"
@@ -6229,7 +6229,7 @@
                                        {
                                            "url":  "docs/typography-posters/propaganda-poster.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6250,7 +6250,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -6272,7 +6272,7 @@
                                        {
                                            "url":  "docs/typography-posters/saul-bass-poster.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6293,7 +6293,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -6315,7 +6315,7 @@
                                        {
                                            "url":  "docs/typography-posters/vogue-cover.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6336,7 +6336,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -6358,7 +6358,7 @@
                                        {
                                            "url":  "docs/typography-posters/pulp-scifi-cover.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6379,7 +6379,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/BubbleBrain",
                                             "author":  "@BubbleBrain",
                                             "source_url":  "https://x.com/BubbleBrain"
@@ -6401,7 +6401,7 @@
                                        {
                                            "url":  "docs/typography-posters/boston-poster.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6422,7 +6422,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.xiaohongshu.com/explore/69e324cd0000000021039ca9",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.xiaohongshu.com/explore/69e324cd0000000021039ca9"
@@ -6444,7 +6444,7 @@
                                        {
                                            "url":  "docs/typography-posters/epic-silhouette-poster.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6465,7 +6465,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.xiaohongshu.com/explore/69e7a01700000000230153f3",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.xiaohongshu.com/explore/69e7a01700000000230153f3"
@@ -6487,7 +6487,7 @@
                                        {
                                            "url":  "docs/typography-posters/dual-exposure-poster.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6508,7 +6508,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.xiaohongshu.com/explore/69e78cd4000000002103bdd3",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.xiaohongshu.com/explore/69e78cd4000000002103bdd3"
@@ -6530,7 +6530,7 @@
                                        {
                                            "url":  "docs/typography-posters/journey-west-silhouette.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6551,7 +6551,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/midori_tatsuta/status/2045441358530498797",
                                             "author":  "@midori_tatsuta",
                                             "source_url":  "https://x.com/midori_tatsuta/status/2045441358530498797"
@@ -6573,7 +6573,7 @@
                                        {
                                            "url":  "docs/typography-posters/japanese-pachinko-flyer.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6594,7 +6594,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/palabraseca/status/2047079358326849911",
                                             "author":  "@palabraseca",
                                             "source_url":  "https://x.com/palabraseca/status/2047079358326849911"
@@ -6616,7 +6616,7 @@
                                        {
                                            "url":  "docs/typography-posters/spanish-fantasy-mobile-poster.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6637,7 +6637,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://www.xiaohongshu.com/explore/69e5cb85000000001a027aa8",
                                             "author":  "Unknown",
                                             "source_url":  "https://www.xiaohongshu.com/explore/69e5cb85000000001a027aa8"
@@ -6659,7 +6659,7 @@
                                        {
                                            "url":  "docs/typography-posters/city-tourism-promo-poster.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6680,7 +6680,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://x.com/aleenaamiir/status/2047325329052823996",
                                             "author":  "@aleenaamiir",
                                             "source_url":  "https://x.com/aleenaamiir/status/2047325329052823996"
@@ -6702,7 +6702,7 @@
                                        {
                                            "url":  "docs/typography-posters/athlete-journey-poster-aya-navarro.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6723,7 +6723,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -6745,7 +6745,7 @@
                                        {
                                            "url":  "docs/uiux-mockups/mobile-budgeting-app-neobank.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6766,7 +6766,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -6788,7 +6788,7 @@
                                        {
                                            "url":  "docs/uiux-mockups/desktop-analytics-dashboard-operations.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -6809,7 +6809,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -6831,7 +6831,7 @@
                                        {
                                            "url":  "docs/uiux-mockups/design-system-component-card-set.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "square",
@@ -6852,7 +6852,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -6874,7 +6874,7 @@
                                        {
                                            "url":  "docs/uiux-mockups/web3-wallet-app-concept.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6895,7 +6895,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -6917,7 +6917,7 @@
                                        {
                                            "url":  "docs/uiux-mockups/health-tracker-wellness-app.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6938,7 +6938,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  "https://github.com/EvoLinkAI/awesome-gpt-image-2-prompts",
                                             "author":  "EvoLinkAI",
                                             "source_url":  "https://github.com/EvoLinkAI/awesome-gpt-image-2-prompts"
@@ -6960,7 +6960,7 @@
                                        {
                                            "url":  "docs/watercolor/watercolor-lily-pond.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "portrait",
@@ -6981,7 +6981,7 @@
                         "quality":  "high",
                         "prompt_template":  null,
                         "attribution":  {
-                                            "source_id":  "skill",
+                                            "source_id":  "wuyoscar",
                                             "author_url":  null,
                                             "author":  null,
                                             "source_url":  null
@@ -7003,7 +7003,7 @@
                                        {
                                            "url":  "docs/watercolor/rainy-botanical-greenhouse.png",
                                            "local_path":  null,
-                                           "source_id":  "skill"
+                                           "source_id":  "wuyoscar"
                                        }
                                    ],
                         "size":  "landscape",
@@ -7012,5 +7012,5 @@
                         "title_zh":  "水彩"
                     }
                 ],
-    "source_id":  "skill"
+    "source_id":  "wuyoscar"
 }

@@ -5,35 +5,35 @@
   "total": 0,
   "sources": [
     {
-      "id": "api-prompts",
+      "id": "Anil",
       "name": "Awesome-GPT-Image-2-API-Prompts",
       "file": "awesome-gpt-image-2-api-prompts.json",
       "source_url": "https://github.com/Anil-matcha/Awesome-GPT-Store",
       "license": "CC-BY-4.0"
     },
     {
-      "id": "youmind",
+      "id": "YouMind",
       "name": "awesome-gpt-image-2-new",
       "file": "awesome-gpt-image-2-new.json",
       "source_url": "https://github.com/YouMind-OpenLab/awesome-gpt-image-2",
       "license": "CC-BY-4.0"
     },
     {
-      "id": "evolink",
+      "id": "EvoLinkAI",
       "name": "awesome-gpt-image-2-prompts",
       "file": "awesome-gpt-image-2-prompts.json",
       "source_url": "https://github.com/EvoLinkAI/awesome-gpt-image-2-prompts",
       "license": "CC-BY-4.0"
     },
     {
-      "id": "canghe",
+      "id": "freestylefly",
       "name": "awesome-gpt-image-2",
       "file": "awesome-gpt-image-2.json",
-      "source_url": "https://github.com/canghe/awesome-gpt-image-2",
+      "source_url": "https://github.com/freestylefly/awesome-gpt-image-2",
       "license": "MIT"
     },
     {
-      "id": "skill",
+      "id": "wuyoscar",
       "name": "gpt_image_2_skill",
       "file": "gpt-image-2-skill.json",
       "source_url": "https://github.com/wuyoscar/gpt_image_2_skill",

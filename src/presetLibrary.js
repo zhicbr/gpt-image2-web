@@ -43,7 +43,7 @@ function normalizeSource(source) {
 
   return {
     id: source.id,
-    label: SOURCE_LABELS[source.id] || source.name,
+    label: SOURCE_LABELS[source.id] || source.id || source.name,
     name: source.name,
     sourceUrl: source.source_url,
     items,

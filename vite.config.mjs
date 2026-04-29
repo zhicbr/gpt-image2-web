@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { visualizer } from "rollup-plugin-visualizer";
-import { copyFileSync, existsSync, mkdirSync, readdirSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -21,6 +20,14 @@ function copyPromptsPlugin() {
         copyFileSync(join(srcDir, file), join(destDir, file));
       }
       console.log(`\u2713 copied ${files.length} prompt files to public/prompts`);
+
+      const routesContent = JSON.stringify({
+        version: 1,
+        include: ["/api/*"],
+        exclude: [],
+      }, null, 2);
+      writeFileSync(join(__dirname, "public", "_routes.json"), routesContent);
+      console.log("\u2713 wrote _routes.json");
     },
   };
 }
@@ -29,12 +36,6 @@ export default defineConfig({
   plugins: [
     react(),
     copyPromptsPlugin(),
-    visualizer({
-      open: true,
-      gzipSize: true,
-      brotliSize: true,
-      filename: "stats.html",
-    }),
   ],
   publicDir: false,
   build: {

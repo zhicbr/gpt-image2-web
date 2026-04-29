@@ -1,10 +1,21 @@
 {
   "name": "gpt-image2-web",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node server.mjs"
+    "prestart": "npm run build:ui",
+    "start": "node server.mjs",
+    "dev:ui": "vite",
+    "build:ui": "vite build"
+  },
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.4",
+    "vite": "^7.3.1"
   },
   "engines": {
     "node": ">=18"

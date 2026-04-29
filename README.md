@@ -1,56 +1,34 @@
-# gpt-image2-web
+﻿# gpt-image2-web
 
-A minimal local web app for generating images with `gpt-image-2`.
+本项目是一个本地生图网页原型。
 
-## Why this app exists
+当前实现：
 
-This repo is intentionally small:
+- 前端：静态页面
+- 后端：Node.js HTTP 服务
+- 上游：通过 `/responses` + `image_generation` tool 调用兼容接口
 
-- It borrows the **API shape** from [`gpt_image_2_skill`](../gpt_image_2_skill/README.md), which directly uses OpenAI image generation endpoints.
-- It avoids the heavier architecture of [`ima2-gen`](../ima2-gen/README.md), which is designed around OAuth and a built-in image tool instead of your own API key.
-- It does **not** depend on a frontend framework or extra npm packages, so you can run it with stock Node.
+当前直接功能只保留一项：`生图`。
 
-## Features
-
-- Text-to-image generation with `gpt-image-2`
-- Controls for size, quality, output format, count, background, and moderation
-- Local server endpoint that keeps `OPENAI_API_KEY` off the client
-- Single-file static frontend with a styled review gallery
-
-## Run
-
-1. Set your environment variables.
-
-```powershell
-$env:OPENAI_API_KEY="sk-..."
-$env:PORT="3000"
-```
-
-2. Start the server.
+## 运行
 
 ```powershell
 cd D:\dev\workspace\workspace-26\image-g\gpt-image2-web
 node server.mjs
 ```
 
-3. Open `http://localhost:3000`.
+浏览器打开 `http://localhost:3000`。
 
-## API
+## 文档
 
-`POST /api/generate`
+- [docs/README.md](./docs/README.md)
+- [docs/ROADMAP.md](./docs/ROADMAP.md)
+- [docs/api-contract.md](./docs/api-contract.md)
+- [docs/naming.md](./docs/naming.md)
 
-```json
-{
-  "prompt": "Editorial perfume campaign with exact text \"NOCTURNE / 03\"",
-  "size": "1024x1536",
-  "quality": "high",
-  "outputFormat": "png",
-  "n": "1",
-  "background": "auto",
-  "moderation": "low"
-}
-```
+## 当前说明
 
-`GET /api/health`
-
-Returns server readiness, whether `OPENAI_API_KEY` is present, and the configured base URL.
+- 后端契约以 `docs/api-contract.md` 为准
+- 命名规范以 `docs/naming.md` 为准
+- 后续前端计划改为 `React + Vite`
+- 在后端未变更前，前端改造不应修改请求字段名

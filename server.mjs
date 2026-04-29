@@ -95,40 +95,13 @@ function validateGenerateInput(input) {
     return { error: "Prompt is required." };
   }
 
-  const allowedSizes = new Set([
-    "1024x1024",
-    "1024x1536",
-    "1536x1024",
-    "2048x2048",
-    "2048x1152",
-    "1152x2048",
-  ]);
-  const allowedQuality = new Set(["low", "medium", "high", "auto"]);
   const allowedFormats = new Set(["png", "jpeg", "webp"]);
-  const allowedBackgrounds = new Set(["auto", "opaque"]);
-  const allowedModeration = new Set(["low", "auto"]);
 
-  const size = cleanString(input.size, "1024x1024");
-  const quality = cleanString(input.quality, "high");
   const outputFormat = cleanString(input.outputFormat, "png");
-  const background = cleanString(input.background, "auto");
-  const moderation = cleanString(input.moderation, "low");
   const n = Math.max(1, Math.min(Number.parseInt(input.n || "1", 10) || 1, 4));
 
-  if (!allowedSizes.has(size)) {
-    return { error: "Unsupported size." };
-  }
-  if (!allowedQuality.has(quality)) {
-    return { error: "Unsupported quality." };
-  }
   if (!allowedFormats.has(outputFormat)) {
     return { error: "Unsupported output format." };
-  }
-  if (!allowedBackgrounds.has(background)) {
-    return { error: "Unsupported background mode." };
-  }
-  if (!allowedModeration.has(moderation)) {
-    return { error: "Unsupported moderation mode." };
   }
   if (n !== 1) {
     return { error: "The current local version only supports generating 1 image at a time." };
@@ -136,11 +109,7 @@ function validateGenerateInput(input) {
 
   return {
     prompt,
-    size,
-    quality,
     outputFormat,
-    background,
-    moderation,
     n,
   };
 }
@@ -158,18 +127,6 @@ function buildResponsesUrl() {
 }
 
 function buildResponsesPayload(input) {
-  const prompt = [
-    "Generate exactly one image that matches the request below.",
-    "Use the image_generation tool rather than replying with plain text.",
-    `Preferred size/aspect: ${input.size}.`,
-    `Preferred quality: ${input.quality}.`,
-    `Preferred background: ${input.background}.`,
-    `App moderation hint: ${input.moderation}.`,
-    "",
-    "User request:",
-    input.prompt,
-  ].join("\n");
-
   return {
     model: responsesModel,
     instructions: [
@@ -184,7 +141,7 @@ function buildResponsesPayload(input) {
         content: [
           {
             type: "input_text",
-            text: prompt,
+            text: input.prompt,
           },
         ],
       },
@@ -392,11 +349,7 @@ async function handleGenerate(req, res) {
 
   logRuntime("generate.request", {
     promptChars: validated.prompt.length,
-    size: validated.size,
-    quality: validated.quality,
     outputFormat: validated.outputFormat,
-    background: validated.background,
-    moderation: validated.moderation,
     n: validated.n,
     model: responsesModel,
     responsesUrl: buildResponsesUrl(),

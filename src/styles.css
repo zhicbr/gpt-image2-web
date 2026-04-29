@@ -274,6 +274,18 @@ a {
   overflow: auto;
 }
 
+.custom-prompt-input {
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--line));
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface) 92%, var(--accent) 8%);
+}
+
+.custom-prompt-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
 .prompt-tail {
   display: flex;
   flex-wrap: wrap;
@@ -439,6 +451,12 @@ a {
   min-width: 34px;
   padding: 0;
   flex-shrink: 0;
+}
+
+.preset-source-icon {
+  width: 16px;
+  height: 16px;
+  display: block;
 }
 
 .preset-page-button:disabled {
@@ -691,10 +709,37 @@ a {
   min-height: 40px;
 }
 
+.stage-top-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
 .stage-actions {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.stage-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: color-mix(in srgb, var(--muted) 84%, var(--accent) 16%);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.88;
+}
+
+.stage-timer-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 72%, white 28%);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 10%, transparent);
+  animation: timerPulse 1.15s ease-in-out infinite;
 }
 
 .stage-body {
@@ -844,6 +889,19 @@ a {
   50% {
     opacity: 1;
     transform: scale(1.03);
+  }
+}
+
+@keyframes timerPulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.92);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 

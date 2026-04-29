@@ -121,6 +121,7 @@ export default function App() {
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [result, setResult] = useState(null);
   const [systemDark, setSystemDark] = useState(false);
   const [zoom, setZoom] = useState(1);
@@ -176,6 +177,20 @@ export default function App() {
     setZoom(1);
     setPan({ x: 0, y: 0 });
   }, [result?.src]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setElapsedSeconds(0);
+      return undefined;
+    }
+
+    const startedAt = Date.now();
+    const timer = window.setInterval(() => {
+      setElapsedSeconds(Math.floor((Date.now() - startedAt) / 1000));
+    }, 1000);
+
+    return () => window.clearInterval(timer);
+  }, [isLoading]);
 
   const currentSource = useMemo(() => {
     return PRESET_SOURCES.find((source) => source.id === presetSourceId) || PRESET_SOURCES[0] || null;
@@ -276,6 +291,13 @@ export default function App() {
   function buildDownloadName(mimeType) {
     const extension = mimeType === "image/jpeg" ? "jpg" : mimeType?.split("/")[1] || form.outputFormat || "png";
     return `frame-forge.${extension}`;
+  }
+
+  function formatElapsed(seconds) {
+    const safe = Math.max(0, seconds || 0);
+    const minutes = Math.floor(safe / 60);
+    const remain = safe % 60;
+    return `${String(minutes).padStart(2, "0")}:${String(remain).padStart(2, "0")}`;
   }
 
   async function handleGenerate() {
@@ -482,7 +504,15 @@ export default function App() {
               aria-label={t.preset.sourceLink}
               title={t.preset.sourceLink}
             >
-              {"\u2197"}
+              <svg className="preset-source-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M9.5 14.5 14.5 9.5M10 6.5H8.25A3.75 3.75 0 0 0 4.5 10.25v5.5a3.75 3.75 0 0 0 3.75 3.75h5.5a3.75 3.75 0 0 0 3.75-3.75V14M14 4.5h5.5V10"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </a>
           ) : null}
         </div>
@@ -584,7 +614,7 @@ export default function App() {
               <div className="prompt-block">
                 <div className="section-label">{t.sections.prompt}</div>
                 <textarea
-                  className="prompt-input"
+                  className="prompt-input custom-prompt-input"
                   value={form.prompt}
                   onChange={(event) => updateField("prompt", event.target.value)}
                   onKeyDown={handlePromptKeyDown}
@@ -705,7 +735,16 @@ export default function App() {
         <div className="content-area">
           <div className="stage-card">
             <div className="stage-top">
-              <div className="stage-top-spacer"></div>
+              <div className="stage-top-meta">
+                {isLoading ? (
+                  <span className="stage-timer">
+                    <span className="stage-timer-dot" aria-hidden="true"></span>
+                    {formatElapsed(elapsedSeconds)}
+                  </span>
+                ) : (
+                  <div className="stage-top-spacer"></div>
+                )}
+              </div>
               <div className="stage-actions">
                 {result?.src ? (
                   <a className="ghost-button" href={result.src} download={result.downloadName}>

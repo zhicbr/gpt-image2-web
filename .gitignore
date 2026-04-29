@@ -6,3 +6,4 @@ server.runtime.log
 server.pid
 node_modules/
 public/
+stats.html

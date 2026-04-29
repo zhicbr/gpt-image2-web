@@ -1,17 +1,6 @@
 import indexData from "../prompts/index.json";
-import apiPromptsData from "../prompts/awesome-gpt-image-2-api-prompts.json";
-import youmindData from "../prompts/awesome-gpt-image-2-new.json";
-import evolinkData from "../prompts/awesome-gpt-image-2-prompts.json";
-import cangheData from "../prompts/awesome-gpt-image-2.json";
-import skillData from "../prompts/gpt-image-2-skill.json";
 
-const FILE_MAP = {
-  "awesome-gpt-image-2-api-prompts.json": apiPromptsData,
-  "awesome-gpt-image-2-new.json": youmindData,
-  "awesome-gpt-image-2-prompts.json": evolinkData,
-  "awesome-gpt-image-2.json": cangheData,
-  "gpt-image-2-skill.json": skillData,
-};
+const dataCache = {};
 
 const SOURCE_LABELS = {
   "api-prompts": "API",
@@ -34,22 +23,32 @@ function normalizePromptItem(item, index, sourceId) {
   };
 }
 
-function normalizeSource(source) {
-  const rawData = FILE_MAP[source.file];
-  const prompts = Array.isArray(rawData?.prompts) ? rawData.prompts : [];
-  const items = prompts
-    .map((item, index) => normalizePromptItem(item, index, source.id))
-    .filter(Boolean);
-
-  return {
+export const PRESET_SOURCES = (Array.isArray(indexData?.sources) ? indexData.sources : [])
+  .map((source) => ({
     id: source.id,
     label: SOURCE_LABELS[source.id] || source.id || source.name,
     name: source.name,
     sourceUrl: source.source_url,
-    items,
-  };
-}
+    file: source.file,
+  }));
 
-export const PRESET_SOURCES = (Array.isArray(indexData?.sources) ? indexData.sources : [])
-  .map(normalizeSource)
-  .filter((source) => source.items.length > 0);
+export async function loadSourceItems(sourceFile) {
+  if (dataCache[sourceFile]) {
+    return dataCache[sourceFile];
+  }
+
+  const response = await fetch(`/prompts/${sourceFile}`);
+  if (!response.ok) {
+    throw new Error(`Failed to load ${sourceFile}`);
+  }
+
+  const rawData = await response.json();
+  const source = PRESET_SOURCES.find((s) => s.file === sourceFile);
+  const prompts = Array.isArray(rawData?.prompts) ? rawData.prompts : [];
+  const items = prompts
+    .map((item, index) => normalizePromptItem(item, index, source?.id || "unknown"))
+    .filter(Boolean);
+
+  dataCache[sourceFile] = items;
+  return items;
+}

@@ -8,7 +8,7 @@ import {
   SIZE_OPTIONS,
   THEME_OPTIONS,
 } from "./copy";
-import { PRESET_PAGE_SIZE, PRESET_SOURCES } from "./presetLibrary";
+import { PRESET_PAGE_SIZE, PRESET_SOURCES, loadSourceItems } from "./presetLibrary";
 
 const SUGGESTION_ORDER = ["size", "quality", "background", "moderation"];
 const SUGGESTION_LEFT_COLUMN = ["size"];
@@ -140,6 +140,7 @@ export default function App() {
   const [presetPage, setPresetPage] = useState(0);
   const [activePresetId, setActivePresetId] = useState(null);
   const [presetDrafts, setPresetDrafts] = useState({});
+  const [presetSourceItems, setPresetSourceItems] = useState([]);
 
   const t = COPY[lang];
   const suggestionGroups = useMemo(() => buildSuggestionGroups(t), [t]);
@@ -174,6 +175,28 @@ export default function App() {
   }, [accent, collapsed, lang, mode, resolvedMode]);
 
   useEffect(() => {
+    let cancelled = false;
+    const source = PRESET_SOURCES.find((s) => s.id === presetSourceId);
+    if (!source) {
+      setPresetSourceItems([]);
+      return;
+    }
+    setPresetSourceItems([]);
+    loadSourceItems(source.file)
+      .then((items) => {
+        if (cancelled) return;
+        setPresetSourceItems(items);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setPresetSourceItems([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [presetSourceId]);
+
+  useEffect(() => {
     setZoom(1);
     setPan({ x: 0, y: 0 });
   }, [result?.src]);
@@ -197,15 +220,14 @@ export default function App() {
   }, [presetSourceId]);
 
   const presetPageCount = useMemo(() => {
-    if (!currentSource) return 1;
-    return Math.max(1, Math.ceil(currentSource.items.length / PRESET_PAGE_SIZE));
-  }, [currentSource]);
+    if (!presetSourceItems.length) return 1;
+    return Math.max(1, Math.ceil(presetSourceItems.length / PRESET_PAGE_SIZE));
+  }, [presetSourceItems]);
 
   const pagedPresets = useMemo(() => {
-    if (!currentSource) return [];
     const start = presetPage * PRESET_PAGE_SIZE;
-    return currentSource.items.slice(start, start + PRESET_PAGE_SIZE);
-  }, [currentSource, presetPage]);
+    return presetSourceItems.slice(start, start + PRESET_PAGE_SIZE);
+  }, [presetSourceItems, presetPage]);
 
   useEffect(() => {
     if (!pagedPresets.length) {
@@ -219,9 +241,9 @@ export default function App() {
   }, [activePresetId, pagedPresets]);
 
   const activePreset = useMemo(() => {
-    if (!currentSource || !activePresetId) return null;
-    return currentSource.items.find((preset) => preset.id === activePresetId) || null;
-  }, [activePresetId, currentSource]);
+    if (!activePresetId) return null;
+    return presetSourceItems.find((preset) => preset.id === activePresetId) || null;
+  }, [activePresetId, presetSourceItems]);
 
   const activePresetText = activePreset ? presetDrafts[activePreset.id] ?? activePreset.originalText : "";
 

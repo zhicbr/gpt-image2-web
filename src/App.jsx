@@ -502,11 +502,15 @@ export default function App() {
       if (detailsOpen && !clickedDetailsButton && !clickedDetailsPanel) {
         setDetailsOpen(false);
       }
+
+      if (editOpen && !clickedEditButton && !clickedEditPanel) {
+        setEditOpen(false);
+      }
     }
 
     document.addEventListener("pointerdown", handlePointerDown);
     return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [detailsOpen, showSettings]);
+  }, [detailsOpen, editOpen, showSettings]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -1503,9 +1507,14 @@ export default function App() {
           placeholder={editText.placeholder}
           spellCheck="false"
         />
-        <button className="edit-panel-send" type="button" onClick={submitEditPrompt} disabled={!cleanPrompt(editPrompt)}>
-          {editText.send}
-        </button>
+        <div className="edit-panel-actions">
+          <button className="mask-secondary-button" type="button" onClick={() => setEditOpen(false)}>
+            {maskText.cancel}
+          </button>
+          <button className="edit-panel-send" type="button" onClick={submitEditPrompt} disabled={!cleanPrompt(editPrompt)}>
+            {editText.send}
+          </button>
+        </div>
       </div>
     );
   }
@@ -1782,6 +1791,7 @@ export default function App() {
           </button>
 
           <div className={`status-dot ${status}`}></div>
+          <div className="app-version">v{__APP_VERSION__}</div>
 
           <div className="bar-actions">
             <button

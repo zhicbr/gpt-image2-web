@@ -586,6 +586,13 @@ a {
   flex-shrink: 0;
 }
 
+.app-version {
+  color: var(--muted);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
 .status-dot.loading {
   background: var(--accent);
 }
@@ -848,6 +855,13 @@ a {
   opacity: 0.42;
   cursor: default;
   transform: none;
+}
+
+.edit-panel-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
 .mask-panel-controls {

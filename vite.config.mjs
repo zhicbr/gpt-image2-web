@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import { copyFileSync, existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import pkg from "./package.json" with { type: "json" };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -37,6 +38,9 @@ export default defineConfig({
     react(),
     copyPromptsPlugin(),
   ],
+  define: {
+    __APP_VERSION__: JSON.stringify(pkg.version),
+  },
   publicDir: false,
   build: {
     outDir: "public",

@@ -855,6 +855,10 @@ a {
   overflow: hidden;
 }
 
+.reference-input {
+  display: none;
+}
+
 .placeholder {
   display: grid;
   place-items: center;
@@ -871,6 +875,203 @@ a {
   border: 1px solid var(--line-strong);
   border-radius: 24px;
   background: linear-gradient(180deg, transparent, var(--surface-2));
+}
+
+.reference-upload {
+  border: 0;
+  background: transparent;
+  cursor: default;
+}
+
+.reference-upload-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--muted);
+}
+
+.reference-upload-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--line));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 92%, var(--accent) 8%);
+  color: var(--muted);
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.reference-upload-icon:hover {
+  border-color: color-mix(in srgb, var(--accent) 58%, var(--line));
+  background: color-mix(in srgb, var(--accent) 16%, var(--surface));
+  color: var(--accent-strong);
+  box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 10%, transparent);
+  transform: translateY(-1px) scale(1.02);
+}
+
+.reference-upload-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.reference-upload-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.reference-gallery-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.reference-gallery-canvas {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.reference-gallery-flow {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.reference-gallery-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.reference-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface-2);
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.reference-card:hover {
+  transform: translateY(-1px);
+}
+
+.reference-card-single {
+  width: 100%;
+  height: 100%;
+  border-radius: 22px;
+}
+
+.reference-card.is-selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+.reference-card-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: color-mix(in srgb, var(--surface-2) 80%, transparent);
+}
+
+.reference-gallery-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--line));
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface) 84%, transparent);
+  backdrop-filter: blur(14px);
+  flex: 0 0 auto;
+}
+
+.reference-preview-chip {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text);
+  font-size: 0.8rem;
+}
+
+.reference-preview-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.reference-preview-error {
+  width: 100%;
+  color: var(--danger);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.reference-action-button {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease,
+    opacity 160ms ease;
+}
+
+.reference-action-button:hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+  transform: translateY(-1px);
+}
+
+.reference-action-button:disabled {
+  opacity: 0.45;
+  cursor: default;
+  transform: none;
 }
 
 .placeholder-error {
@@ -1179,6 +1380,29 @@ a {
   .placeholder-frame {
     width: min(56vw, 280px);
     height: min(56vw, 280px);
+  }
+
+  .reference-upload-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .reference-gallery-wrap {
+    padding: 10px;
+  }
+
+  .reference-gallery-flow,
+  .reference-gallery-row {
+    gap: 10px;
+  }
+
+  .reference-gallery-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .reference-preview-actions {
+    justify-content: flex-end;
   }
 }
 

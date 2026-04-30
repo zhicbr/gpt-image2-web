@@ -110,8 +110,109 @@ function buildSuggestionGroups(t) {
   ];
 }
 
+function makeReferenceId() {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `ref-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function readImageMetrics(dataUrl) {
+  return new Promise((resolve) => {
+    const image = new Image();
+    image.onload = () => {
+      resolve({
+        width: image.naturalWidth || image.width || 1,
+        height: image.naturalHeight || image.height || 1,
+      });
+    };
+    image.onerror = () => resolve({ width: 1, height: 1 });
+    image.src = dataUrl;
+  });
+}
+
+async function readReferenceFile(file) {
+  const dataUrl = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(typeof reader.result === "string" ? reader.result : "");
+    reader.onerror = () => reject(new Error("Failed to read file."));
+    reader.readAsDataURL(file);
+  });
+
+  const metrics = await readImageMetrics(dataUrl);
+  return {
+    id: makeReferenceId(),
+    name: file.name,
+    dataUrl,
+    width: metrics.width,
+    height: metrics.height,
+  };
+}
+
+function getReferenceAspect(item) {
+  return item?.width && item?.height ? item.width / item.height : 1;
+}
+
+function buildReferenceRowSets(items) {
+  const count = items.length;
+  const rowCount = count <= 1 ? 1 : count <= 2 ? 1 : count <= 4 ? 2 : count <= 8 ? 3 : 4;
+  const baseSize = Math.floor(count / rowCount);
+  const remainder = count % rowCount;
+  const rows = [];
+  let cursor = 0;
+
+  for (let index = 0; index < rowCount; index += 1) {
+    const rowSize = baseSize + (index < remainder ? 1 : 0);
+    rows.push(items.slice(cursor, cursor + rowSize));
+    cursor += rowSize;
+  }
+
+  return rows.filter((row) => row.length);
+}
+
+function layoutReferenceRows(items, bounds, gap = 12) {
+  const rows = buildReferenceRowSets(items);
+  const safeBounds =
+    bounds.width && bounds.height
+      ? bounds
+      : {
+          width: 880,
+          height: items.length <= 2 ? 420 : items.length <= 4 ? 480 : 540,
+        };
+
+  const measuredRows = rows.map((row) => {
+    const aspectSum = row.reduce((sum, item) => sum + getReferenceAspect(item), 0) || row.length;
+    const rowHeight = (safeBounds.width - gap * Math.max(0, row.length - 1)) / aspectSum;
+    return {
+      items: row.map((item) => {
+        const aspect = getReferenceAspect(item);
+        return {
+          ...item,
+          layoutWidth: rowHeight * aspect,
+          layoutHeight: rowHeight,
+        };
+      }),
+      rowHeight,
+    };
+  });
+
+  const totalHeight =
+    measuredRows.reduce((sum, row) => sum + row.rowHeight, 0) + gap * Math.max(0, measuredRows.length - 1);
+  const scale = totalHeight > safeBounds.height ? safeBounds.height / totalHeight : 1;
+
+  return measuredRows.map((row) => ({
+    items: row.items.map((item) => ({
+      ...item,
+      layoutWidth: item.layoutWidth * scale,
+      layoutHeight: item.layoutHeight * scale,
+    })),
+  }));
+}
+
 export default function App() {
   const dragRef = useRef(null);
+  const referenceInputRef = useRef(null);
+  const referenceCanvasRef = useRef(null);
   const settingsButtonRef = useRef(null);
   const settingsPanelRef = useRef(null);
   const detailsButtonRef = useRef(null);
@@ -149,6 +250,10 @@ export default function App() {
   const [showSettings, setShowSettings] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [generationMeta, setGenerationMeta] = useState(null);
+  const [referenceImages, setReferenceImages] = useState([]);
+  const [selectedReferenceId, setSelectedReferenceId] = useState(null);
+  const [referencePickerMode, setReferencePickerMode] = useState("add");
+  const [referenceCanvasBounds, setReferenceCanvasBounds] = useState({ width: 0, height: 0 });
 
   const t = COPY[lang];
   const detailsText = lang === "zh"
@@ -247,6 +352,28 @@ export default function App() {
   }, [result?.src]);
 
   useEffect(() => {
+    const element = referenceCanvasRef.current;
+    if (!element || result?.src || !referenceImages.length || typeof ResizeObserver === "undefined") {
+      return undefined;
+    }
+
+    const updateBounds = (target) => {
+      const nextWidth = Math.round(target.clientWidth || 0);
+      const nextHeight = Math.round(target.clientHeight || 0);
+      setReferenceCanvasBounds((current) =>
+        current.width === nextWidth && current.height === nextHeight
+          ? current
+          : { width: nextWidth, height: nextHeight }
+      );
+    };
+
+    updateBounds(element);
+    const observer = new ResizeObserver(() => updateBounds(element));
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [referenceImages.length, result?.src]);
+
+  useEffect(() => {
     function handlePointerDown(event) {
       if (!(event.target instanceof Node)) return;
 
@@ -313,6 +440,12 @@ export default function App() {
   }, [activePresetId, presetSourceItems]);
 
   const activePresetText = activePreset ? presetDrafts[activePreset.id] ?? activePreset.originalText : "";
+  const selectedReferenceImage = useMemo(() => {
+    return referenceImages.find((item) => item.id === selectedReferenceId) || null;
+  }, [referenceImages, selectedReferenceId]);
+  const referenceGalleryRows = useMemo(() => {
+    return layoutReferenceRows(referenceImages, referenceCanvasBounds);
+  }, [referenceCanvasBounds, referenceImages]);
 
   function updateField(key, value) {
     setForm((current) => ({ ...current, [key]: value }));
@@ -412,9 +545,56 @@ export default function App() {
       suggestions: { ...suggestions },
       presetSourceLabel: tab === "preset" ? currentSource?.label || "" : "",
       presetTitle: tab === "preset" ? activePreset?.titleZh || "" : "",
-      hasReferenceImage: false,
+      hasReferenceImage: referenceImages.length > 0,
       revisedPrompt: null,
     };
+  }
+
+  function openReferencePicker(mode = "add") {
+    setReferencePickerMode(mode);
+    referenceInputRef.current?.click();
+  }
+
+  function removeSelectedReferenceImage() {
+    if (!selectedReferenceId) return;
+    setReferenceImages((current) => {
+      const next = current.filter((item) => item.id !== selectedReferenceId);
+      const nextSelected = next[0]?.id || null;
+      setSelectedReferenceId(nextSelected);
+      return next;
+    });
+    if (referenceInputRef.current) {
+      referenceInputRef.current.value = "";
+    }
+  }
+
+  async function handleReferenceChange(event) {
+    const files = Array.from(event.target.files || []);
+    event.target.value = "";
+    if (!files.length) return;
+
+    const imageFiles = files.filter((file) => file.type.startsWith("image/"));
+    if (!imageFiles.length) return;
+
+    try {
+      const items = (await Promise.all(imageFiles.map((file) => readReferenceFile(file)))).filter(
+        (item) => item.dataUrl
+      );
+
+      if (!items.length) return;
+
+      if (referencePickerMode === "replace" && selectedReferenceId) {
+        const nextItem = items[0];
+        setReferenceImages((current) =>
+          current.map((item) => (item.id === selectedReferenceId ? { ...nextItem } : item))
+        );
+        setSelectedReferenceId(nextItem.id);
+        return;
+      }
+
+      setReferenceImages((current) => [...current, ...items]);
+      setSelectedReferenceId(items[items.length - 1].id);
+    } catch {}
   }
 
   function formatElapsed(seconds) {
@@ -452,6 +632,7 @@ export default function App() {
         body: JSON.stringify({
           prompt: tab === "preset" ? presetPrompt : buildComposedPrompt(),
           outputFormat: form.outputFormat,
+          referenceImages: referenceImages.map((item) => item.dataUrl),
           n: "1",
         }),
       });
@@ -604,7 +785,7 @@ export default function App() {
       );
     }
 
-    if (status === "error") {
+    if (status === "error" && !referenceImage?.dataUrl) {
       return (
         <div className="placeholder placeholder-error">
           <div className="placeholder-icon"></div>
@@ -640,9 +821,94 @@ export default function App() {
       );
     }
 
+    if (referenceImages.length) {
+      return (
+        <div className="reference-gallery-wrap">
+          <div className="reference-gallery-canvas" ref={referenceCanvasRef}>
+            {referenceImages.length === 1 ? (
+              <button
+                className={`reference-card reference-card-single${
+                  selectedReferenceId === referenceImages[0].id ? " is-selected" : ""
+                }`}
+                type="button"
+                onClick={() => setSelectedReferenceId(referenceImages[0].id)}
+              >
+                <img
+                  className="reference-card-image"
+                  src={referenceImages[0].dataUrl}
+                  alt={referenceImages[0].name || "Reference"}
+                />
+              </button>
+            ) : (
+              <div className="reference-gallery-flow">
+                {referenceGalleryRows.map((row, rowIndex) => (
+                  <div key={`row-${rowIndex}`} className="reference-gallery-row">
+                    {row.items.map((item) => (
+                      <button
+                        key={item.id}
+                        className={`reference-card${selectedReferenceId === item.id ? " is-selected" : ""}`}
+                        type="button"
+                        onClick={() => setSelectedReferenceId(item.id)}
+                        style={{
+                          width: item.layoutWidth ? `${item.layoutWidth}px` : undefined,
+                          height: item.layoutHeight ? `${item.layoutHeight}px` : undefined,
+                        }}
+                      >
+                        <img className="reference-card-image" src={item.dataUrl} alt={item.name || "Reference"} />
+                      </button>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="reference-gallery-footer">
+            <div className="reference-preview-chip">
+              {selectedReferenceImage?.name || (lang === "zh" ? "\u53c2\u8003\u56fe" : "Reference")}
+            </div>
+            <div className="reference-preview-actions">
+              <button className="reference-action-button" type="button" onClick={() => openReferencePicker("add")}>
+                {lang === "zh" ? "\u6dfb\u52a0" : "Add"}
+              </button>
+              <button
+                className="reference-action-button"
+                type="button"
+                onClick={() => openReferencePicker("replace")}
+                disabled={!selectedReferenceImage}
+              >
+                {lang === "zh" ? "\u66ff\u6362" : "Replace"}
+              </button>
+              <button
+                className="reference-action-button"
+                type="button"
+                onClick={removeSelectedReferenceImage}
+                disabled={!selectedReferenceImage}
+              >
+                {lang === "zh" ? "\u79fb\u9664" : "Remove"}
+              </button>
+            </div>
+            {status === "error" && message ? <div className="reference-preview-error">{message}</div> : null}
+          </div>
+        </div>
+      );
+    }
+
     return (
-      <div className="placeholder placeholder-idle">
-        <div className="placeholder-frame"></div>
+      <div className="placeholder placeholder-idle reference-upload">
+        <div className="placeholder-frame reference-upload-frame">
+          <button className="reference-upload-icon" type="button" onClick={() => openReferencePicker("add")}>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M12 16V8M8.75 11.25 12 8l3.25 3.25M6.5 17.5h11"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+          <div className="reference-upload-text">{lang === "zh" ? "\u4e0a\u4f20\u53c2\u8003\u56fe" : "Upload reference"}</div>
+        </div>
       </div>
     );
   }
@@ -837,6 +1103,15 @@ export default function App() {
 
   return (
     <div className={`app-shell${collapsed ? " is-collapsed" : ""}`}>
+      <input
+        ref={referenceInputRef}
+        className="reference-input"
+        type="file"
+        accept="image/*"
+        multiple={referencePickerMode === "add"}
+        onChange={handleReferenceChange}
+        tabIndex={-1}
+      />
       <div
         className={`sidebar-backdrop${sidebarOpen ? " is-visible" : ""}`}
         onClick={closeSidebar}

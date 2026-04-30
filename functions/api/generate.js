@@ -9,11 +9,19 @@ function validateGenerateInput(input) {
   const allowedFormats = new Set(["png", "jpeg", "webp"]);
   const outputFormat = cleanString(input.outputFormat, "png");
   const n = Math.max(1, Math.min(Number.parseInt(input.n || "1", 10) || 1, 4));
+  const referenceImages = Array.isArray(input.referenceImages)
+    ? input.referenceImages.map((item) => cleanString(item)).filter(Boolean)
+    : [];
 
   if (!allowedFormats.has(outputFormat)) return { error: "Unsupported output format." };
   if (n !== 1) return { error: "The current version only supports generating 1 image at a time." };
+  for (const referenceImage of referenceImages) {
+    if (!/^data:image\/[a-zA-Z0-9.+-]+;base64,/u.test(referenceImage)) {
+      return { error: "Unsupported reference image format." };
+    }
+  }
 
-  return { prompt, outputFormat, n };
+  return { prompt, outputFormat, n, referenceImages };
 }
 
 export async function onRequestPost({ request, env }) {
@@ -45,7 +53,14 @@ export async function onRequestPost({ request, env }) {
   const payload = {
     model: responsesModel,
     instructions: "You are powering a local image generation UI. You must call the image_generation tool exactly once. Do not answer with text only.",
-    input: [{ type: "message", role: "user", content: [{ type: "input_text", text: validated.prompt }] }],
+    input: [{
+      type: "message",
+      role: "user",
+      content: [
+        { type: "input_text", text: validated.prompt },
+        ...validated.referenceImages.map((imageUrl) => ({ type: "input_image", image_url: imageUrl })),
+      ],
+    }],
     tools: [{ type: "image_generation", output_format: validated.outputFormat }],
     tool_choice: "required",
     parallel_tool_calls: false,

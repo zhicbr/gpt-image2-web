@@ -217,6 +217,8 @@ export default function App() {
   const settingsPanelRef = useRef(null);
   const detailsButtonRef = useRef(null);
   const detailsPanelRef = useRef(null);
+  const editButtonRef = useRef(null);
+  const editPanelRef = useRef(null);
 
   const [lang, setLang] = useState(readStorage("ff-lang", "zh"));
   const [mode, setMode] = useState(readStorage("ff-mode", "system"));
@@ -254,6 +256,9 @@ export default function App() {
   const [selectedReferenceId, setSelectedReferenceId] = useState(null);
   const [referencePickerMode, setReferencePickerMode] = useState("add");
   const [referenceCanvasBounds, setReferenceCanvasBounds] = useState({ width: 0, height: 0 });
+  const [referenceError, setReferenceError] = useState("");
+  const [editOpen, setEditOpen] = useState(false);
+  const [editPrompt, setEditPrompt] = useState("");
 
   const t = COPY[lang];
   const detailsText = lang === "zh"
@@ -286,6 +291,21 @@ export default function App() {
         emptyHints: "None",
         close: "Close",
         info: "Details",
+      };
+  const editText = lang === "zh"
+    ? {
+        placeholder: "\u7ee7\u7eed\u4fee\u6539\u8fd9\u5f20\u56fe",
+        send: "\u53d1\u9001",
+        open: "\u7ee7\u7eed\u7f16\u8f91",
+        limit: "\u6700\u591a\u652f\u63015\u5f20\u53c2\u8003\u56fe",
+        count: `${referenceImages.length}/5`,
+      }
+    : {
+        placeholder: "Refine this image",
+        send: "Send",
+        open: "Edit current image",
+        limit: "Up to 5 reference images",
+        count: `${referenceImages.length}/5`,
       };
   const suggestionGroups = useMemo(() => buildSuggestionGroups(t), [t]);
   const suggestionGroupMap = useMemo(
@@ -348,6 +368,8 @@ export default function App() {
   useEffect(() => {
     if (!result?.src) {
       setDetailsOpen(false);
+      setEditOpen(false);
+      setEditPrompt("");
     }
   }, [result?.src]);
 
@@ -381,6 +403,8 @@ export default function App() {
       const clickedSettingsPanel = settingsPanelRef.current?.contains(event.target);
       const clickedDetailsButton = detailsButtonRef.current?.contains(event.target);
       const clickedDetailsPanel = detailsPanelRef.current?.contains(event.target);
+      const clickedEditButton = editButtonRef.current?.contains(event.target);
+      const clickedEditPanel = editPanelRef.current?.contains(event.target);
 
       if (showSettings && !clickedSettingsButton && !clickedSettingsPanel) {
         setShowSettings(false);
@@ -389,11 +413,15 @@ export default function App() {
       if (detailsOpen && !clickedDetailsButton && !clickedDetailsPanel) {
         setDetailsOpen(false);
       }
+
+      if (editOpen && !clickedEditButton && !clickedEditPanel) {
+        setEditOpen(false);
+      }
     }
 
     document.addEventListener("pointerdown", handlePointerDown);
     return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [detailsOpen, showSettings]);
+  }, [detailsOpen, editOpen, showSettings]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -550,13 +578,27 @@ export default function App() {
     };
   }
 
+  function buildEditGenerationMeta() {
+    return {
+      mode: "edit",
+      outputFormat: form.outputFormat,
+      suggestions: {},
+      presetSourceLabel: "",
+      presetTitle: "",
+      hasReferenceImage: true,
+      revisedPrompt: null,
+    };
+  }
+
   function openReferencePicker(mode = "add") {
     setReferencePickerMode(mode);
+    setReferenceError("");
     referenceInputRef.current?.click();
   }
 
   function removeSelectedReferenceImage() {
     if (!selectedReferenceId) return;
+    setReferenceError("");
     setReferenceImages((current) => {
       const next = current.filter((item) => item.id !== selectedReferenceId);
       const nextSelected = next[0]?.id || null;
@@ -584,6 +626,7 @@ export default function App() {
       if (!items.length) return;
 
       if (referencePickerMode === "replace" && selectedReferenceId) {
+        setReferenceError("");
         const nextItem = items[0];
         setReferenceImages((current) =>
           current.map((item) => (item.id === selectedReferenceId ? { ...nextItem } : item))
@@ -592,8 +635,17 @@ export default function App() {
         return;
       }
 
-      setReferenceImages((current) => [...current, ...items]);
-      setSelectedReferenceId(items[items.length - 1].id);
+      setReferenceImages((current) => {
+        const remaining = Math.max(0, 5 - current.length);
+        const nextItems = items.slice(0, remaining);
+        if (!nextItems.length) {
+          setReferenceError(editText.limit);
+          return current;
+        }
+        setReferenceError(items.length > remaining ? editText.limit : "");
+        setSelectedReferenceId(nextItems[nextItems.length - 1].id);
+        return [...current, ...nextItems];
+      });
     } catch {}
   }
 
@@ -604,10 +656,12 @@ export default function App() {
     return `${String(minutes).padStart(2, "0")}:${String(remain).padStart(2, "0")}`;
   }
 
-  async function handleGenerate() {
+  async function handleGenerate(options = {}) {
     const customPrompt = form.prompt.trim();
     const presetPrompt = activePresetText.trim();
-    const rawPrompt = tab === "preset" ? presetPrompt : customPrompt;
+    const editPromptText = cleanPrompt(options.prompt);
+    const rawPrompt =
+      options.mode === "edit" ? editPromptText : tab === "preset" ? presetPrompt : customPrompt;
 
     if (!rawPrompt) {
       setStatus("error");
@@ -621,18 +675,23 @@ export default function App() {
     setResult(null);
     setMessage("");
     setDetailsOpen(false);
+    setEditOpen(false);
     setGenerationMeta(null);
 
-    const requestMeta = buildGenerationMeta();
+    const requestMeta = options.mode === "edit" ? buildEditGenerationMeta() : buildGenerationMeta();
+    const requestPrompt =
+      options.mode === "edit" ? editPromptText : tab === "preset" ? presetPrompt : buildComposedPrompt();
+    const requestReferences =
+      options.mode === "edit" ? (options.referenceImages || []) : referenceImages.map((item) => item.dataUrl);
 
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          prompt: tab === "preset" ? presetPrompt : buildComposedPrompt(),
+          prompt: requestPrompt,
           outputFormat: form.outputFormat,
-          referenceImages: referenceImages.map((item) => item.dataUrl),
+          referenceImages: requestReferences,
           n: "1",
         }),
       });
@@ -682,6 +741,28 @@ export default function App() {
     } finally {
       setIsLoading(false);
     }
+  }
+
+  function cleanPrompt(value) {
+    return typeof value === "string" ? value.trim() : "";
+  }
+
+  function openEditPanel() {
+    setDetailsOpen(false);
+    setEditPrompt("");
+    setEditOpen(true);
+  }
+
+  function submitEditPrompt() {
+    const nextPrompt = cleanPrompt(editPrompt);
+    if (!nextPrompt || !result?.src) return;
+    setEditPrompt("");
+    setEditOpen(false);
+    handleGenerate({
+      mode: "edit",
+      prompt: nextPrompt,
+      referenceImages: [result.src],
+    });
   }
 
   async function parseImageStream(response, onImage) {
@@ -833,6 +914,7 @@ export default function App() {
                 type="button"
                 onClick={() => setSelectedReferenceId(referenceImages[0].id)}
               >
+                <span className="reference-card-order">1</span>
                 <img
                   className="reference-card-image"
                   src={referenceImages[0].dataUrl}
@@ -843,7 +925,9 @@ export default function App() {
               <div className="reference-gallery-flow">
                 {referenceGalleryRows.map((row, rowIndex) => (
                   <div key={`row-${rowIndex}`} className="reference-gallery-row">
-                    {row.items.map((item) => (
+                    {row.items.map((item, itemIndex) => {
+                      const order = referenceImages.findIndex((entry) => entry.id === item.id) + 1;
+                      return (
                       <button
                         key={item.id}
                         className={`reference-card${selectedReferenceId === item.id ? " is-selected" : ""}`}
@@ -854,17 +938,22 @@ export default function App() {
                           height: item.layoutHeight ? `${item.layoutHeight}px` : undefined,
                         }}
                       >
+                        <span className="reference-card-order">{order || itemIndex + 1}</span>
                         <img className="reference-card-image" src={item.dataUrl} alt={item.name || "Reference"} />
                       </button>
-                    ))}
+                      );
+                    })}
                   </div>
                 ))}
               </div>
             )}
           </div>
           <div className="reference-gallery-footer">
-            <div className="reference-preview-chip">
-              {selectedReferenceImage?.name || (lang === "zh" ? "\u53c2\u8003\u56fe" : "Reference")}
+            <div className="reference-preview-meta">
+              <div className="reference-preview-chip">
+                {selectedReferenceImage?.name || (lang === "zh" ? "\u53c2\u8003\u56fe" : "Reference")}
+              </div>
+              <div className="reference-preview-count">{editText.count}</div>
             </div>
             <div className="reference-preview-actions">
               <button className="reference-action-button" type="button" onClick={() => openReferencePicker("add")}>
@@ -887,6 +976,7 @@ export default function App() {
                 {lang === "zh" ? "\u79fb\u9664" : "Remove"}
               </button>
             </div>
+            {referenceError ? <div className="reference-preview-error">{referenceError}</div> : null}
             {status === "error" && message ? <div className="reference-preview-error">{message}</div> : null}
           </div>
         </div>
@@ -963,7 +1053,13 @@ export default function App() {
 
         <div className="details-grid">
           <div className="details-label">{detailsText.mode}</div>
-          <div className="details-value">{generationMeta.mode === "preset" ? detailsText.preset : detailsText.custom}</div>
+          <div className="details-value">
+            {generationMeta.mode === "preset"
+              ? detailsText.preset
+              : generationMeta.mode === "edit"
+                ? editText.open
+                : detailsText.custom}
+          </div>
 
           {sourceText ? (
             <>
@@ -1000,6 +1096,25 @@ export default function App() {
             </>
           ) : null}
         </div>
+      </div>
+    );
+  }
+
+  function renderEditPanel() {
+    if (!editOpen || !result?.src) return null;
+
+    return (
+      <div className="edit-panel" ref={editPanelRef}>
+        <textarea
+          className="edit-panel-input"
+          value={editPrompt}
+          onChange={(event) => setEditPrompt(event.target.value)}
+          placeholder={editText.placeholder}
+          spellCheck="false"
+        />
+        <button className="edit-panel-send" type="button" onClick={submitEditPrompt} disabled={!cleanPrompt(editPrompt)}>
+          {editText.send}
+        </button>
       </div>
     );
   }
@@ -1334,6 +1449,25 @@ export default function App() {
                   </button>
                 ) : null}
                 {result?.src ? (
+                  <button
+                    className="icon-button stage-tool-button"
+                    type="button"
+                    onClick={openEditPanel}
+                    aria-label={editText.open}
+                    ref={editButtonRef}
+                  >
+                    <svg className="stage-tool-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path
+                        d="m15.5 5.5 3 3M6.75 17.25l2.75-.5 8.75-8.75a1.5 1.5 0 0 0 0-2.12l-.13-.13a1.5 1.5 0 0 0-2.12 0L7.25 14.5l-.5 2.75Z"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                ) : null}
+                {result?.src ? (
                   <a className="ghost-button" href={result.src} download={result.downloadName}>
                     {t.top.download}
                   </a>
@@ -1342,6 +1476,7 @@ export default function App() {
             </div>
 
             {renderDetailsPanel()}
+            {renderEditPanel()}
             <div className="stage-body">{renderStageBody()}</div>
           </div>
         </div>

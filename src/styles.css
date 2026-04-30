@@ -729,6 +729,12 @@ a {
   padding: 0;
 }
 
+.stage-tool-button:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .stage-tool-icon {
   width: 17px;
   height: 17px;
@@ -753,7 +759,7 @@ a {
 .edit-panel {
   position: absolute;
   top: 64px;
-  right: 16px;
+  left: 16px;
   z-index: 8;
   width: min(360px, calc(100% - 32px));
   display: grid;
@@ -763,6 +769,39 @@ a {
   border-radius: 18px;
   background: color-mix(in srgb, var(--surface) 94%, var(--accent) 6%);
   box-shadow: var(--shadow);
+}
+
+.mask-panel {
+  position: absolute;
+  top: 64px;
+  left: 16px;
+  z-index: 9;
+  width: min(380px, calc(100% - 32px));
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--surface) 95%, var(--accent) 5%);
+  box-shadow: var(--shadow);
+}
+
+.floating-panel-handle {
+  display: flex;
+  align-items: center;
+  min-height: 28px;
+  cursor: grab;
+  user-select: none;
+}
+
+.floating-panel-handle:active {
+  cursor: grabbing;
+}
+
+.floating-panel-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
 }
 
 .edit-panel-input {
@@ -809,6 +848,55 @@ a {
   opacity: 0.42;
   cursor: default;
   transform: none;
+}
+
+.mask-panel-controls {
+  display: grid;
+  gap: 10px;
+}
+
+.mask-brush-group {
+  display: grid;
+  gap: 6px;
+}
+
+.mask-brush-label {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.mask-brush-slider {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.mask-panel-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mask-secondary-button {
+  min-width: 72px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.mask-secondary-button:hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+  transform: translateY(-1px);
 }
 
 .details-panel-top {
@@ -1079,6 +1167,12 @@ a {
   border-radius: 22px;
 }
 
+.reference-single-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .reference-card.is-selected {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
@@ -1246,6 +1340,40 @@ a {
   overflow: hidden;
   touch-action: none;
   cursor: default;
+}
+
+.mask-stage-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.image-wrap {
+  position: relative;
+}
+
+.image-wrap .mask-stage-overlay {
+  inset: 16px;
+}
+
+.mask-canvas-wrap {
+  position: relative;
+  pointer-events: auto;
+}
+
+.mask-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(0deg, rgba(255, 92, 92, 0.08), rgba(255, 92, 92, 0.08)),
+    transparent;
+  cursor: crosshair;
 }
 
 .image-wrap.is-draggable {
@@ -1467,7 +1595,15 @@ a {
 
   .edit-panel {
     top: 56px;
-    right: 10px;
+    left: 10px;
+    width: calc(100% - 20px);
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  .mask-panel {
+    top: 56px;
+    left: 10px;
     width: calc(100% - 20px);
     padding: 10px;
     border-radius: 16px;

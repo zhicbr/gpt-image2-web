@@ -209,16 +209,51 @@ function layoutReferenceRows(items, bounds, gap = 12) {
   }));
 }
 
+function getContainSize(bounds, image) {
+  if (!bounds.width || !bounds.height || !image?.width || !image?.height) {
+    return { width: 0, height: 0 };
+  }
+
+  const imageAspect = image.width / image.height;
+  const boundsAspect = bounds.width / bounds.height;
+  if (imageAspect > boundsAspect) {
+    return {
+      width: bounds.width,
+      height: bounds.width / imageAspect,
+    };
+  }
+
+  return {
+    width: bounds.height * imageAspect,
+    height: bounds.height,
+  };
+}
+
+function clampPanelPosition(position, bounds, panelSize) {
+  const maxX = Math.max(0, (bounds.width || 0) - panelSize.width - 16);
+  const maxY = Math.max(0, (bounds.height || 0) - panelSize.height - 16);
+  return {
+    x: Math.min(Math.max(0, position.x), maxX),
+    y: Math.min(Math.max(0, position.y), maxY),
+  };
+}
+
 export default function App() {
   const dragRef = useRef(null);
+  const floatingDragRef = useRef(null);
+  const maskDrawRef = useRef(null);
   const referenceInputRef = useRef(null);
   const referenceCanvasRef = useRef(null);
+  const stageBodyRef = useRef(null);
   const settingsButtonRef = useRef(null);
   const settingsPanelRef = useRef(null);
   const detailsButtonRef = useRef(null);
   const detailsPanelRef = useRef(null);
   const editButtonRef = useRef(null);
   const editPanelRef = useRef(null);
+  const maskButtonRef = useRef(null);
+  const maskPanelRef = useRef(null);
+  const maskCanvasRef = useRef(null);
 
   const [lang, setLang] = useState(readStorage("ff-lang", "zh"));
   const [mode, setMode] = useState(readStorage("ff-mode", "system"));
@@ -259,6 +294,14 @@ export default function App() {
   const [referenceError, setReferenceError] = useState("");
   const [editOpen, setEditOpen] = useState(false);
   const [editPrompt, setEditPrompt] = useState("");
+  const [maskOpen, setMaskOpen] = useState(false);
+  const [maskPrompt, setMaskPrompt] = useState("");
+  const [maskBrush, setMaskBrush] = useState(36);
+  const [maskDataUrl, setMaskDataUrl] = useState("");
+  const [maskPaths, setMaskPaths] = useState([]);
+  const [maskStageBounds, setMaskStageBounds] = useState({ width: 0, height: 0 });
+  const [editPanelPos, setEditPanelPos] = useState({ x: 0, y: 0 });
+  const [maskPanelPos, setMaskPanelPos] = useState({ x: 0, y: 0 });
 
   const t = COPY[lang];
   const detailsText = lang === "zh"
@@ -306,6 +349,25 @@ export default function App() {
         open: "Edit current image",
         limit: "Up to 5 reference images",
         count: `${referenceImages.length}/5`,
+      };
+  const maskText = lang === "zh"
+    ? {
+        open: "\u5c40\u90e8\u4fee\u6539",
+        placeholder: "\u63cf\u8ff0\u8981\u4fee\u6539\u7684\u533a\u57df",
+        brush: "\u753b\u7b14",
+        clear: "\u6e05\u7a7a",
+        cancel: "\u53d6\u6d88",
+        send: "\u53d1\u9001",
+        disabled: "\u4ec5\u652f\u6301\u5355\u5f20\u5f53\u524d\u53ef\u7f16\u8f91\u56fe",
+      }
+    : {
+        open: "Partial edit",
+        placeholder: "Describe the area to change",
+        brush: "Brush",
+        clear: "Clear",
+        cancel: "Cancel",
+        send: "Send",
+        disabled: "Available for one editable image only",
       };
   const suggestionGroups = useMemo(() => buildSuggestionGroups(t), [t]);
   const suggestionGroupMap = useMemo(
@@ -370,8 +432,33 @@ export default function App() {
       setDetailsOpen(false);
       setEditOpen(false);
       setEditPrompt("");
+      setMaskOpen(false);
+      setMaskPrompt("");
+      setMaskDataUrl("");
     }
   }, [result?.src]);
+
+  useEffect(() => {
+    const element = stageBodyRef.current?.closest(".stage-card");
+    if (!element || typeof ResizeObserver === "undefined") {
+      return undefined;
+    }
+
+    const updateBounds = (target) => {
+      const nextWidth = Math.round(target.clientWidth || 0);
+      const nextHeight = Math.round(target.clientHeight || 0);
+      setMaskStageBounds((current) =>
+        current.width === nextWidth && current.height === nextHeight
+          ? current
+          : { width: nextWidth, height: nextHeight }
+      );
+    };
+
+    updateBounds(element);
+    const observer = new ResizeObserver(() => updateBounds(element));
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const element = referenceCanvasRef.current;
@@ -405,6 +492,8 @@ export default function App() {
       const clickedDetailsPanel = detailsPanelRef.current?.contains(event.target);
       const clickedEditButton = editButtonRef.current?.contains(event.target);
       const clickedEditPanel = editPanelRef.current?.contains(event.target);
+      const clickedMaskButton = maskButtonRef.current?.contains(event.target);
+      const clickedMaskPanel = maskPanelRef.current?.contains(event.target);
 
       if (showSettings && !clickedSettingsButton && !clickedSettingsPanel) {
         setShowSettings(false);
@@ -413,15 +502,11 @@ export default function App() {
       if (detailsOpen && !clickedDetailsButton && !clickedDetailsPanel) {
         setDetailsOpen(false);
       }
-
-      if (editOpen && !clickedEditButton && !clickedEditPanel) {
-        setEditOpen(false);
-      }
     }
 
     document.addEventListener("pointerdown", handlePointerDown);
     return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [detailsOpen, editOpen, showSettings]);
+  }, [detailsOpen, showSettings]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -436,6 +521,37 @@ export default function App() {
 
     return () => window.clearInterval(timer);
   }, [isLoading]);
+
+  useEffect(() => {
+    function handlePointerMove(event) {
+      if (!floatingDragRef.current) return;
+      const nextX = floatingDragRef.current.originX + (event.clientX - floatingDragRef.current.startX);
+      const nextY = floatingDragRef.current.originY + (event.clientY - floatingDragRef.current.startY);
+      const next = clampPanelPosition(
+        { x: nextX, y: nextY },
+        maskStageBounds,
+        floatingDragRef.current.panelSize
+      );
+      if (floatingDragRef.current.type === "edit") {
+        setEditPanelPos(next);
+      } else if (floatingDragRef.current.type === "mask") {
+        setMaskPanelPos(next);
+      }
+    }
+
+    function handlePointerUp() {
+      floatingDragRef.current = null;
+    }
+
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+    window.addEventListener("pointercancel", handlePointerUp);
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("pointercancel", handlePointerUp);
+    };
+  }, [maskStageBounds]);
 
   const currentSource = useMemo(() => {
     return PRESET_SOURCES.find((source) => source.id === presetSourceId) || PRESET_SOURCES[0] || null;
@@ -474,6 +590,31 @@ export default function App() {
   const referenceGalleryRows = useMemo(() => {
     return layoutReferenceRows(referenceImages, referenceCanvasBounds);
   }, [referenceCanvasBounds, referenceImages]);
+  const currentEditableImage = useMemo(() => {
+    if (result?.src) {
+      return {
+        src: result.src,
+        width: result.width,
+        height: result.height,
+      };
+    }
+    if (referenceImages.length === 1) {
+      return referenceImages[0];
+    }
+    return null;
+  }, [referenceImages, result]);
+  const canOpenMask = Boolean(currentEditableImage);
+  const maskDisplaySize = useMemo(() => {
+    return getContainSize(maskStageBounds, currentEditableImage);
+  }, [currentEditableImage, maskStageBounds]);
+
+  useEffect(() => {
+    if (!canOpenMask) {
+      setMaskOpen(false);
+      setMaskPrompt("");
+      setMaskPaths([]);
+    }
+  }, [canOpenMask]);
 
   function updateField(key, value) {
     setForm((current) => ({ ...current, [key]: value }));
@@ -590,6 +731,18 @@ export default function App() {
     };
   }
 
+  function buildMaskGenerationMeta() {
+    return {
+      mode: "mask",
+      outputFormat: form.outputFormat,
+      suggestions: {},
+      presetSourceLabel: "",
+      presetTitle: "",
+      hasReferenceImage: true,
+      revisedPrompt: null,
+    };
+  }
+
   function openReferencePicker(mode = "add") {
     setReferencePickerMode(mode);
     setReferenceError("");
@@ -661,7 +814,11 @@ export default function App() {
     const presetPrompt = activePresetText.trim();
     const editPromptText = cleanPrompt(options.prompt);
     const rawPrompt =
-      options.mode === "edit" ? editPromptText : tab === "preset" ? presetPrompt : customPrompt;
+      options.mode === "edit" || options.mode === "mask"
+        ? editPromptText
+        : tab === "preset"
+          ? presetPrompt
+          : customPrompt;
 
     if (!rawPrompt) {
       setStatus("error");
@@ -678,11 +835,23 @@ export default function App() {
     setEditOpen(false);
     setGenerationMeta(null);
 
-    const requestMeta = options.mode === "edit" ? buildEditGenerationMeta() : buildGenerationMeta();
+    const requestMeta =
+      options.mode === "edit"
+        ? buildEditGenerationMeta()
+        : options.mode === "mask"
+          ? buildMaskGenerationMeta()
+          : buildGenerationMeta();
     const requestPrompt =
-      options.mode === "edit" ? editPromptText : tab === "preset" ? presetPrompt : buildComposedPrompt();
+      options.mode === "edit" || options.mode === "mask"
+        ? editPromptText
+        : tab === "preset"
+          ? presetPrompt
+          : buildComposedPrompt();
     const requestReferences =
-      options.mode === "edit" ? (options.referenceImages || []) : referenceImages.map((item) => item.dataUrl);
+      options.mode === "edit" || options.mode === "mask"
+        ? (options.referenceImages || [])
+        : referenceImages.map((item) => item.dataUrl);
+    const requestMask = options.mode === "mask" ? options.maskImage || "" : "";
 
     try {
       const response = await fetch("/api/generate", {
@@ -692,6 +861,7 @@ export default function App() {
           prompt: requestPrompt,
           outputFormat: form.outputFormat,
           referenceImages: requestReferences,
+          maskImage: requestMask,
           n: "1",
         }),
       });
@@ -722,11 +892,14 @@ export default function App() {
       const image = images[0];
       const mimeType = image.mimeType || "image/png";
       const src = image.base64 ? `data:${mimeType};base64,${image.base64}` : image.url;
+      const metrics = await readImageMetrics(src);
 
       setResult({
         src,
         mimeType,
         downloadName: buildDownloadName(mimeType),
+        width: metrics.width,
+        height: metrics.height,
       });
       setGenerationMeta({
         ...requestMeta,
@@ -749,8 +922,10 @@ export default function App() {
 
   function openEditPanel() {
     setDetailsOpen(false);
+    setMaskOpen(false);
     setEditPrompt("");
     setEditOpen(true);
+    setEditPanelPos({ x: 0, y: 8 });
   }
 
   function submitEditPrompt() {
@@ -762,6 +937,101 @@ export default function App() {
       mode: "edit",
       prompt: nextPrompt,
       referenceImages: [result.src],
+    });
+  }
+
+  function openMaskPanel() {
+    if (!canOpenMask) return;
+    setDetailsOpen(false);
+    setEditOpen(false);
+    setMaskPrompt("");
+    setMaskPaths([]);
+    setMaskDataUrl("");
+    setMaskOpen(true);
+    setMaskPanelPos({ x: 0, y: 8 });
+  }
+
+  function clearMaskDrawing() {
+    setMaskPaths([]);
+    setMaskDataUrl("");
+    const canvas = maskCanvasRef.current;
+    if (!canvas) return;
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  function startFloatingDrag(type, event) {
+    const panel = type === "edit" ? editPanelRef.current : maskPanelRef.current;
+    if (!panel) return;
+    floatingDragRef.current = {
+      type,
+      startX: event.clientX,
+      startY: event.clientY,
+      originX: type === "edit" ? editPanelPos.x : maskPanelPos.x,
+      originY: type === "edit" ? editPanelPos.y : maskPanelPos.y,
+      panelSize: {
+        width: panel.offsetWidth,
+        height: panel.offsetHeight,
+      },
+    };
+  }
+
+  function exportMaskImage() {
+    const canvas = maskCanvasRef.current;
+    if (!canvas || !currentEditableImage?.width || !currentEditableImage?.height || !maskPaths.length) {
+      return "";
+    }
+
+    const exportCanvas = document.createElement("canvas");
+    exportCanvas.width = currentEditableImage.width;
+    exportCanvas.height = currentEditableImage.height;
+    const context = exportCanvas.getContext("2d");
+    if (!context) return "";
+
+    context.fillStyle = "rgba(0,0,0,1)";
+    context.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+    context.globalCompositeOperation = "destination-out";
+    context.strokeStyle = "rgba(0,0,0,1)";
+    context.fillStyle = "rgba(0,0,0,1)";
+    context.lineCap = "round";
+    context.lineJoin = "round";
+
+    const scaleX = exportCanvas.width / Math.max(1, canvas.width);
+    const scaleY = exportCanvas.height / Math.max(1, canvas.height);
+
+    for (const path of maskPaths) {
+      if (!path.points.length) continue;
+      context.lineWidth = path.size * scaleX;
+      context.beginPath();
+      context.moveTo(path.points[0].x * scaleX, path.points[0].y * scaleY);
+      for (let index = 1; index < path.points.length; index += 1) {
+        context.lineTo(path.points[index].x * scaleX, path.points[index].y * scaleY);
+      }
+      if (path.points.length === 1) {
+        context.arc(path.points[0].x * scaleX, path.points[0].y * scaleY, (path.size * scaleX) / 2, 0, Math.PI * 2);
+        context.fill();
+      } else {
+        context.stroke();
+      }
+    }
+
+    return exportCanvas.toDataURL("image/png");
+  }
+
+  function submitMaskPrompt() {
+    const nextPrompt = cleanPrompt(maskPrompt);
+    if (!nextPrompt || !canOpenMask || !maskPaths.length) return;
+    const maskImage = exportMaskImage();
+    if (!maskImage) return;
+    setMaskDataUrl(maskImage);
+    setMaskPrompt("");
+    setMaskOpen(false);
+    handleGenerate({
+      mode: "mask",
+      prompt: nextPrompt,
+      referenceImages: [currentEditableImage.src || currentEditableImage.dataUrl],
+      maskImage,
     });
   }
 
@@ -856,6 +1126,118 @@ export default function App() {
     dragRef.current = null;
   }
 
+  function getMaskPoint(event) {
+    const canvas = maskCanvasRef.current;
+    if (!canvas) return null;
+    const rect = canvas.getBoundingClientRect();
+    return {
+      x: Math.max(0, Math.min(rect.width, event.clientX - rect.left)),
+      y: Math.max(0, Math.min(rect.height, event.clientY - rect.top)),
+    };
+  }
+
+  function paintMaskPaths(paths) {
+    const canvas = maskCanvasRef.current;
+    if (!canvas) return;
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.strokeStyle = "rgba(255, 92, 92, 0.96)";
+    context.fillStyle = "rgba(255, 92, 92, 0.96)";
+    context.lineCap = "round";
+    context.lineJoin = "round";
+
+    for (const path of paths) {
+      if (!path.points.length) continue;
+      context.lineWidth = path.size;
+      context.beginPath();
+      context.moveTo(path.points[0].x, path.points[0].y);
+      for (let index = 1; index < path.points.length; index += 1) {
+        context.lineTo(path.points[index].x, path.points[index].y);
+      }
+      if (path.points.length === 1) {
+        context.beginPath();
+        context.arc(path.points[0].x, path.points[0].y, path.size / 2, 0, Math.PI * 2);
+        context.fill();
+      } else {
+        context.stroke();
+      }
+    }
+  }
+
+  useEffect(() => {
+    const canvas = maskCanvasRef.current;
+    if (!canvas || !maskOpen || !maskDisplaySize.width || !maskDisplaySize.height) return;
+    canvas.width = Math.round(maskDisplaySize.width);
+    canvas.height = Math.round(maskDisplaySize.height);
+    paintMaskPaths(maskPaths);
+  }, [maskDisplaySize.height, maskDisplaySize.width, maskOpen, maskPaths]);
+
+  function handleMaskPointerDown(event) {
+    if (!maskOpen) return;
+    const point = getMaskPoint(event);
+    if (!point) return;
+    const nextPath = {
+      size: maskBrush,
+      points: [point],
+    };
+    maskDrawRef.current = true;
+    setMaskPaths((current) => {
+      const next = [...current, nextPath];
+      paintMaskPaths(next);
+      return next;
+    });
+  }
+
+  function handleMaskPointerMove(event) {
+    if (!maskOpen || !maskDrawRef.current) return;
+    const point = getMaskPoint(event);
+    if (!point) return;
+    setMaskPaths((current) => {
+      if (!current.length) return current;
+      const next = current.map((path, index) =>
+        index === current.length - 1
+          ? {
+              ...path,
+              points: [...path.points, point],
+            }
+          : path
+      );
+      paintMaskPaths(next);
+      return next;
+    });
+  }
+
+  function stopMaskDrawing() {
+    maskDrawRef.current = null;
+  }
+
+  function renderMaskOverlay() {
+    if (!maskOpen || !canOpenMask || !maskDisplaySize.width || !maskDisplaySize.height) return null;
+
+    return (
+      <div className="mask-stage-overlay">
+        <div
+          className="mask-canvas-wrap"
+          style={{
+            width: `${maskDisplaySize.width}px`,
+            height: `${maskDisplaySize.height}px`,
+          }}
+        >
+          <canvas
+            ref={maskCanvasRef}
+            className="mask-canvas"
+            onPointerDown={handleMaskPointerDown}
+            onPointerMove={handleMaskPointerMove}
+            onPointerUp={stopMaskDrawing}
+            onPointerLeave={stopMaskDrawing}
+            onPointerCancel={stopMaskDrawing}
+          />
+        </div>
+      </div>
+    );
+  }
+
   function renderStageBody() {
     if (isLoading) {
       return (
@@ -866,7 +1248,7 @@ export default function App() {
       );
     }
 
-    if (status === "error" && !referenceImage?.dataUrl) {
+    if (status === "error" && !referenceImages.length) {
       return (
         <div className="placeholder placeholder-error">
           <div className="placeholder-icon"></div>
@@ -890,6 +1272,7 @@ export default function App() {
             setPan({ x: 0, y: 0 });
           }}
         >
+          {renderMaskOverlay()}
           <img
             className="result-image"
             src={result.src}
@@ -907,20 +1290,23 @@ export default function App() {
         <div className="reference-gallery-wrap">
           <div className="reference-gallery-canvas" ref={referenceCanvasRef}>
             {referenceImages.length === 1 ? (
-              <button
-                className={`reference-card reference-card-single${
-                  selectedReferenceId === referenceImages[0].id ? " is-selected" : ""
-                }`}
-                type="button"
-                onClick={() => setSelectedReferenceId(referenceImages[0].id)}
-              >
-                <span className="reference-card-order">1</span>
-                <img
-                  className="reference-card-image"
-                  src={referenceImages[0].dataUrl}
-                  alt={referenceImages[0].name || "Reference"}
-                />
-              </button>
+              <div className="reference-single-stage">
+                {renderMaskOverlay()}
+                <button
+                  className={`reference-card reference-card-single${
+                    selectedReferenceId === referenceImages[0].id ? " is-selected" : ""
+                  }`}
+                  type="button"
+                  onClick={() => setSelectedReferenceId(referenceImages[0].id)}
+                >
+                  <span className="reference-card-order">1</span>
+                  <img
+                    className="reference-card-image"
+                    src={referenceImages[0].dataUrl}
+                    alt={referenceImages[0].name || "Reference"}
+                  />
+                </button>
+              </div>
             ) : (
               <div className="reference-gallery-flow">
                 {referenceGalleryRows.map((row, rowIndex) => (
@@ -1058,6 +1444,8 @@ export default function App() {
               ? detailsText.preset
               : generationMeta.mode === "edit"
                 ? editText.open
+                : generationMeta.mode === "mask"
+                  ? maskText.open
                 : detailsText.custom}
           </div>
 
@@ -1104,7 +1492,10 @@ export default function App() {
     if (!editOpen || !result?.src) return null;
 
     return (
-      <div className="edit-panel" ref={editPanelRef}>
+      <div className="edit-panel" ref={editPanelRef} style={{ transform: `translate(${editPanelPos.x}px, ${editPanelPos.y}px)` }}>
+        <div className="floating-panel-handle" onPointerDown={(event) => startFloatingDrag("edit", event)}>
+          <div className="floating-panel-title">{editText.open}</div>
+        </div>
         <textarea
           className="edit-panel-input"
           value={editPrompt}
@@ -1115,6 +1506,55 @@ export default function App() {
         <button className="edit-panel-send" type="button" onClick={submitEditPrompt} disabled={!cleanPrompt(editPrompt)}>
           {editText.send}
         </button>
+      </div>
+    );
+  }
+
+  function renderMaskPanel() {
+    if (!maskOpen || !canOpenMask) return null;
+
+    return (
+      <div className="mask-panel" ref={maskPanelRef} style={{ transform: `translate(${maskPanelPos.x}px, ${maskPanelPos.y}px)` }}>
+        <div className="floating-panel-handle" onPointerDown={(event) => startFloatingDrag("mask", event)}>
+          <div className="floating-panel-title">{maskText.open}</div>
+        </div>
+        <textarea
+          className="edit-panel-input"
+          value={maskPrompt}
+          onChange={(event) => setMaskPrompt(event.target.value)}
+          placeholder={maskText.placeholder}
+          spellCheck="false"
+        />
+        <div className="mask-panel-controls">
+          <div className="mask-brush-group">
+            <span className="mask-brush-label">{maskText.brush}</span>
+            <input
+              className="mask-brush-slider"
+              type="range"
+              min="12"
+              max="72"
+              step="2"
+              value={maskBrush}
+              onChange={(event) => setMaskBrush(Number(event.target.value))}
+            />
+          </div>
+          <div className="mask-panel-actions">
+            <button className="mask-secondary-button" type="button" onClick={clearMaskDrawing}>
+              {maskText.clear}
+            </button>
+            <button className="mask-secondary-button" type="button" onClick={() => setMaskOpen(false)}>
+              {maskText.cancel}
+            </button>
+            <button
+              className="edit-panel-send"
+              type="button"
+              onClick={submitMaskPrompt}
+              disabled={!cleanPrompt(maskPrompt) || !maskPaths.length}
+            >
+              {maskText.send}
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
@@ -1467,6 +1907,27 @@ export default function App() {
                     </svg>
                   </button>
                 ) : null}
+                {(result?.src || referenceImages.length) ? (
+                  <button
+                    className="icon-button stage-tool-button"
+                    type="button"
+                    onClick={openMaskPanel}
+                    aria-label={maskText.open}
+                    title={canOpenMask ? maskText.open : maskText.disabled}
+                    ref={maskButtonRef}
+                    disabled={!canOpenMask}
+                  >
+                    <svg className="stage-tool-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path
+                        d="M6.5 16.5c1.4-3.9 4.6-7.1 8.5-8.5M15.75 4.75l3.5 3.5M7.75 19.25c-1.2 0-2.25-.97-2.25-2.17 0-1.61 1.38-2.83 3.12-2.83.34 0 .67.05.98.14.3-1.86 1.96-3.27 3.96-3.27 2.21 0 4 1.72 4 3.85 0 2.37-2.03 4.28-4.53 4.28H7.75Z"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                ) : null}
                 {result?.src ? (
                   <a className="ghost-button" href={result.src} download={result.downloadName}>
                     {t.top.download}
@@ -1477,7 +1938,8 @@ export default function App() {
 
             {renderDetailsPanel()}
             {renderEditPanel()}
-            <div className="stage-body">{renderStageBody()}</div>
+            {renderMaskPanel()}
+            <div className="stage-body" ref={stageBodyRef}>{renderStageBody()}</div>
           </div>
         </div>
       </main>

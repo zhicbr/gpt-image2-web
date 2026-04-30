@@ -9,6 +9,19 @@
 - **部署**：Cloudflare Pages（静态资源 + Edge Functions）
 - **流式响应**：SSE 透传，前端实时解析
 
+## 实现说明
+
+当前版本的生图链路，**不是直接调用传统的图片生成 API**（如 `/images/generations`），而是走 **`/responses` + `image_generation` tool**：
+
+- 前端请求 `/api/generate`
+- Pages Function 转发到上游 `responses` 接口
+- 请求体中显式声明 `image_generation` tool，并强制调用
+- 上游通过 SSE 返回 `image_generation_call` 结果
+- 后端直接透传流式响应，前端通过读取器逐帧解析，避免服务端长时间攒完整数据而超时
+
+这条链路的思路与 Codex 集成式生图方式一致。  
+后续可以再扩展为直接支持传统生图 API，但当前项目只实现这一条路径。
+
 ## 特性
 
 - 双模式：自定义提示词 / 预设提示词库
@@ -89,4 +102,3 @@ OPENAI_MODEL=gpt-5.4
 ├── server.mjs             # 本地 Node.js 备用服务端
 └── _routes.json           # Pages Functions 路由限定
 ```
-

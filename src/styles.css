@@ -689,6 +689,7 @@ a {
 }
 
 .stage-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -721,6 +722,108 @@ a {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.stage-tool-button {
+  min-width: 40px;
+  padding: 0;
+}
+
+.stage-tool-icon {
+  width: 17px;
+  height: 17px;
+  display: block;
+}
+
+.details-panel {
+  position: absolute;
+  top: 64px;
+  right: 16px;
+  z-index: 8;
+  width: min(340px, calc(100% - 32px));
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--surface) 92%, var(--accent) 8%);
+  box-shadow: var(--shadow);
+}
+
+.details-panel-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.details-panel-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.details-close-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 10px 12px;
+  align-items: start;
+}
+
+.details-label {
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.details-value {
+  min-width: 0;
+  color: var(--text);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  word-break: break-word;
+}
+
+.details-value-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.details-chip-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.details-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--line));
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.76rem;
+}
+
+.details-revised-text {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
 }
 
 .stage-timer {
@@ -1055,6 +1158,18 @@ a {
   .stage-card {
     padding: 10px;
     border-radius: var(--radius-lg);
+  }
+
+  .details-panel {
+    top: 56px;
+    right: 10px;
+    width: calc(100% - 20px);
+    padding: 12px;
+    border-radius: 16px;
+  }
+
+  .details-grid {
+    grid-template-columns: 72px minmax(0, 1fr);
   }
 
   .stage-body {

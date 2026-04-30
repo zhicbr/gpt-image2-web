@@ -112,6 +112,10 @@ function buildSuggestionGroups(t) {
 
 export default function App() {
   const dragRef = useRef(null);
+  const settingsButtonRef = useRef(null);
+  const settingsPanelRef = useRef(null);
+  const detailsButtonRef = useRef(null);
+  const detailsPanelRef = useRef(null);
 
   const [lang, setLang] = useState(readStorage("ff-lang", "zh"));
   const [mode, setMode] = useState(readStorage("ff-mode", "system"));
@@ -143,8 +147,41 @@ export default function App() {
   const [presetSourceItems, setPresetSourceItems] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [generationMeta, setGenerationMeta] = useState(null);
 
   const t = COPY[lang];
+  const detailsText = lang === "zh"
+    ? {
+        title: "\u8be6\u7ec6\u4fe1\u606f",
+        mode: "\u6a21\u5f0f",
+        source: "\u6765\u6e90",
+        preset: "\u9884\u8bbe",
+        custom: "\u81ea\u5b9a\u4e49",
+        format: "\u8f93\u51fa\u683c\u5f0f",
+        reference: "\u53c2\u8003\u56fe",
+        referenceNone: "\u65e0",
+        hints: "\u9644\u52a0\u5efa\u8bae",
+        revisedPrompt: "\u4fee\u8ba2\u63d0\u793a\u8bcd",
+        emptyHints: "\u65e0",
+        close: "\u5173\u95ed",
+        info: "\u8be6\u7ec6\u4fe1\u606f",
+      }
+    : {
+        title: "Details",
+        mode: "Mode",
+        source: "Source",
+        preset: "Preset",
+        custom: "Custom",
+        format: "Output format",
+        reference: "Reference",
+        referenceNone: "None",
+        hints: "Hints",
+        revisedPrompt: "Revised prompt",
+        emptyHints: "None",
+        close: "Close",
+        info: "Details",
+      };
   const suggestionGroups = useMemo(() => buildSuggestionGroups(t), [t]);
   const suggestionGroupMap = useMemo(
     () => Object.fromEntries(suggestionGroups.map((group) => [group.key, group])),
@@ -202,6 +239,34 @@ export default function App() {
     setZoom(1);
     setPan({ x: 0, y: 0 });
   }, [result?.src]);
+
+  useEffect(() => {
+    if (!result?.src) {
+      setDetailsOpen(false);
+    }
+  }, [result?.src]);
+
+  useEffect(() => {
+    function handlePointerDown(event) {
+      if (!(event.target instanceof Node)) return;
+
+      const clickedSettingsButton = settingsButtonRef.current?.contains(event.target);
+      const clickedSettingsPanel = settingsPanelRef.current?.contains(event.target);
+      const clickedDetailsButton = detailsButtonRef.current?.contains(event.target);
+      const clickedDetailsPanel = detailsPanelRef.current?.contains(event.target);
+
+      if (showSettings && !clickedSettingsButton && !clickedSettingsPanel) {
+        setShowSettings(false);
+      }
+
+      if (detailsOpen && !clickedDetailsButton && !clickedDetailsPanel) {
+        setDetailsOpen(false);
+      }
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [detailsOpen, showSettings]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -318,6 +383,16 @@ export default function App() {
     });
   }, [suggestionGroups, suggestions]);
 
+  const detailHintPills = useMemo(() => {
+    if (!generationMeta?.suggestions) return [];
+    return SUGGESTION_ORDER.flatMap((key) => {
+      const group = suggestionGroups.find((item) => item.key === key);
+      const value = generationMeta.suggestions[key];
+      if (!group || !value) return [];
+      return [{ key, label: group.display(value) }];
+    });
+  }, [generationMeta, suggestionGroups]);
+
   function buildComposedPrompt() {
     const rawPrompt = form.prompt.trim();
     const tail = activeSuggestionPills.map((pill) => `[${pill.token}]`).join(" ");
@@ -328,6 +403,18 @@ export default function App() {
   function buildDownloadName(mimeType) {
     const extension = mimeType === "image/jpeg" ? "jpg" : mimeType?.split("/")[1] || form.outputFormat || "png";
     return `frame-forge.${extension}`;
+  }
+
+  function buildGenerationMeta() {
+    return {
+      mode: tab,
+      outputFormat: form.outputFormat,
+      suggestions: { ...suggestions },
+      presetSourceLabel: tab === "preset" ? currentSource?.label || "" : "",
+      presetTitle: tab === "preset" ? activePreset?.titleZh || "" : "",
+      hasReferenceImage: false,
+      revisedPrompt: null,
+    };
   }
 
   function formatElapsed(seconds) {
@@ -353,6 +440,10 @@ export default function App() {
     setStatus("loading");
     setResult(null);
     setMessage("");
+    setDetailsOpen(false);
+    setGenerationMeta(null);
+
+    const requestMeta = buildGenerationMeta();
 
     try {
       const response = await fetch("/api/generate", {
@@ -396,6 +487,10 @@ export default function App() {
         src,
         mimeType,
         downloadName: buildDownloadName(mimeType),
+      });
+      setGenerationMeta({
+        ...requestMeta,
+        revisedPrompt,
       });
       setStatus("success");
       setMessage(revisedPrompt ? t.messages.revised : "");
@@ -575,6 +670,71 @@ export default function App() {
         onToggle={(value) => updateSuggestion(group.key, value)}
         labels={t.options}
       />
+    );
+  }
+
+  function renderDetailsPanel() {
+    if (!detailsOpen || !result?.src || !generationMeta) return null;
+
+    const sourceText =
+      generationMeta.mode === "preset"
+        ? [generationMeta.presetSourceLabel, generationMeta.presetTitle].filter(Boolean).join(" / ")
+        : null;
+
+    return (
+      <div className="details-panel" ref={detailsPanelRef}>
+        <div className="details-panel-top">
+          <div className="details-panel-title">{detailsText.title}</div>
+          <button
+            className="details-close-button"
+            type="button"
+            onClick={() => setDetailsOpen(false)}
+            aria-label={detailsText.close}
+          >
+            {"\u00D7"}
+          </button>
+        </div>
+
+        <div className="details-grid">
+          <div className="details-label">{detailsText.mode}</div>
+          <div className="details-value">{generationMeta.mode === "preset" ? detailsText.preset : detailsText.custom}</div>
+
+          {sourceText ? (
+            <>
+              <div className="details-label">{detailsText.source}</div>
+              <div className="details-value">{sourceText}</div>
+            </>
+          ) : null}
+
+          <div className="details-label">{detailsText.format}</div>
+          <div className="details-value details-value-mono">{generationMeta.outputFormat}</div>
+
+          <div className="details-label">{detailsText.reference}</div>
+          <div className="details-value">{generationMeta.hasReferenceImage ? "Yes" : detailsText.referenceNone}</div>
+
+          <div className="details-label">{detailsText.hints}</div>
+          <div className="details-value">
+            {detailHintPills.length ? (
+              <div className="details-chip-wrap">
+                {detailHintPills.map((item) => (
+                  <span key={item.key} className="details-chip">
+                    {item.label}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              detailsText.emptyHints
+            )}
+          </div>
+
+          {generationMeta.revisedPrompt ? (
+            <>
+              <div className="details-label">{detailsText.revisedPrompt}</div>
+              <div className="details-value details-revised-text">{generationMeta.revisedPrompt}</div>
+            </>
+          ) : null}
+        </div>
+      </div>
     );
   }
 
@@ -799,11 +959,12 @@ export default function App() {
               type="button"
               onClick={() => setShowSettings((prev) => !prev)}
               aria-label="Settings"
+              ref={settingsButtonRef}
             >
               &#9881;
             </button>
 
-            <div className={`settings-group${showSettings ? " is-open" : ""}`}>
+            <div className={`settings-group${showSettings ? " is-open" : ""}`} ref={settingsPanelRef}>
               <div className="swatch-wrap">
                 {THEME_OPTIONS.map((theme) => (
                   <button
@@ -879,6 +1040,25 @@ export default function App() {
               </div>
               <div className="stage-actions">
                 {result?.src ? (
+                  <button
+                    className="icon-button stage-tool-button"
+                    type="button"
+                    onClick={() => setDetailsOpen((current) => !current)}
+                    aria-label={detailsText.info}
+                    ref={detailsButtonRef}
+                  >
+                    <svg className="stage-tool-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path
+                        d="M12 8.25h.01M10.75 11h1.25v4h1.25M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                ) : null}
+                {result?.src ? (
                   <a className="ghost-button" href={result.src} download={result.downloadName}>
                     {t.top.download}
                   </a>
@@ -886,6 +1066,7 @@ export default function App() {
               </div>
             </div>
 
+            {renderDetailsPanel()}
             <div className="stage-body">{renderStageBody()}</div>
           </div>
         </div>

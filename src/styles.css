@@ -796,6 +796,7 @@ a {
 .floating-panel-handle {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   min-height: 28px;
   cursor: grab;
   user-select: none;
@@ -809,6 +810,29 @@ a {
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--muted);
+}
+
+.mask-collapse-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.mask-panel-body {
+  display: grid;
+  gap: 10px;
+}
+
+.mask-panel-body.is-collapsed {
+  display: none;
 }
 
 .edit-panel-input {
@@ -1618,9 +1642,33 @@ a {
   .mask-panel {
     top: 56px;
     left: 10px;
-    width: calc(100% - 20px);
+    width: min(320px, calc(100% - 20px));
     padding: 10px;
     border-radius: 16px;
+  }
+
+  .floating-panel-handle {
+    min-height: 32px;
+  }
+
+  .mask-panel.is-collapsed-mobile {
+    width: auto;
+  }
+
+  .mask-panel .edit-panel-input {
+    min-height: 88px;
+  }
+
+  .mask-canvas {
+    touch-action: none;
+  }
+
+  .mask-panel-actions {
+    justify-content: stretch;
+  }
+
+  .mask-panel-actions > button {
+    flex: 1 1 0;
   }
 
   .details-grid {

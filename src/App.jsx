@@ -299,6 +299,7 @@ export default function App() {
   const [maskBrush, setMaskBrush] = useState(36);
   const [maskDataUrl, setMaskDataUrl] = useState("");
   const [maskPaths, setMaskPaths] = useState([]);
+  const [maskCollapsed, setMaskCollapsed] = useState(false);
   const [maskStageBounds, setMaskStageBounds] = useState({ width: 0, height: 0 });
   const [editPanelPos, setEditPanelPos] = useState({ x: 0, y: 0 });
   const [maskPanelPos, setMaskPanelPos] = useState({ x: 0, y: 0 });
@@ -951,6 +952,7 @@ export default function App() {
     setMaskPrompt("");
     setMaskPaths([]);
     setMaskDataUrl("");
+    setMaskCollapsed(false);
     setMaskOpen(true);
     setMaskPanelPos({ x: 0, y: 8 });
   }
@@ -958,6 +960,7 @@ export default function App() {
   function clearMaskDrawing() {
     setMaskPaths([]);
     setMaskDataUrl("");
+    maskDrawRef.current = null;
     const canvas = maskCanvasRef.current;
     if (!canvas) return;
     const context = canvas.getContext("2d");
@@ -1179,41 +1182,56 @@ export default function App() {
 
   function handleMaskPointerDown(event) {
     if (!maskOpen) return;
+    event.preventDefault();
     const point = getMaskPoint(event);
     if (!point) return;
     const nextPath = {
       size: maskBrush,
       points: [point],
     };
-    maskDrawRef.current = true;
-    setMaskPaths((current) => {
-      const next = [...current, nextPath];
-      paintMaskPaths(next);
-      return next;
-    });
+    maskDrawRef.current = nextPath;
+    const canvas = maskCanvasRef.current;
+    if (!canvas) return;
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    context.strokeStyle = "rgba(255, 92, 92, 0.96)";
+    context.fillStyle = "rgba(255, 92, 92, 0.96)";
+    context.lineCap = "round";
+    context.lineJoin = "round";
+    context.lineWidth = nextPath.size;
+    context.beginPath();
+    context.arc(point.x, point.y, nextPath.size / 2, 0, Math.PI * 2);
+    context.fill();
   }
 
   function handleMaskPointerMove(event) {
     if (!maskOpen || !maskDrawRef.current) return;
+    event.preventDefault();
     const point = getMaskPoint(event);
     if (!point) return;
-    setMaskPaths((current) => {
-      if (!current.length) return current;
-      const next = current.map((path, index) =>
-        index === current.length - 1
-          ? {
-              ...path,
-              points: [...path.points, point],
-            }
-          : path
-      );
-      paintMaskPaths(next);
-      return next;
-    });
+    const currentPath = maskDrawRef.current;
+    const previous = currentPath.points[currentPath.points.length - 1];
+    currentPath.points.push(point);
+
+    const canvas = maskCanvasRef.current;
+    if (!canvas) return;
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    context.strokeStyle = "rgba(255, 92, 92, 0.96)";
+    context.lineCap = "round";
+    context.lineJoin = "round";
+    context.lineWidth = currentPath.size;
+    context.beginPath();
+    context.moveTo(previous.x, previous.y);
+    context.lineTo(point.x, point.y);
+    context.stroke();
   }
 
   function stopMaskDrawing() {
+    if (!maskDrawRef.current) return;
+    const finishedPath = maskDrawRef.current;
     maskDrawRef.current = null;
+    setMaskPaths((current) => [...current, finishedPath]);
   }
 
   function renderMaskOverlay() {
@@ -1523,45 +1541,59 @@ export default function App() {
     if (!maskOpen || !canOpenMask) return null;
 
     return (
-      <div className="mask-panel" ref={maskPanelRef} style={{ transform: `translate(${maskPanelPos.x}px, ${maskPanelPos.y}px)` }}>
+      <div
+        className={`mask-panel${maskCollapsed ? " is-collapsed-mobile" : ""}`}
+        ref={maskPanelRef}
+        style={{ transform: `translate(${maskPanelPos.x}px, ${maskPanelPos.y}px)` }}
+      >
         <div className="floating-panel-handle" onPointerDown={(event) => startFloatingDrag("mask", event)}>
           <div className="floating-panel-title">{maskText.open}</div>
+          <button
+            className="mask-collapse-button"
+            type="button"
+            onClick={() => setMaskCollapsed((current) => !current)}
+            aria-label={maskCollapsed ? "expand-mask-panel" : "collapse-mask-panel"}
+          >
+            {maskCollapsed ? "+" : "-"}
+          </button>
         </div>
-        <textarea
-          className="edit-panel-input"
-          value={maskPrompt}
-          onChange={(event) => setMaskPrompt(event.target.value)}
-          placeholder={maskText.placeholder}
-          spellCheck="false"
-        />
-        <div className="mask-panel-controls">
-          <div className="mask-brush-group">
-            <span className="mask-brush-label">{maskText.brush}</span>
-            <input
-              className="mask-brush-slider"
-              type="range"
-              min="12"
-              max="72"
-              step="2"
-              value={maskBrush}
-              onChange={(event) => setMaskBrush(Number(event.target.value))}
-            />
-          </div>
-          <div className="mask-panel-actions">
-            <button className="mask-secondary-button" type="button" onClick={clearMaskDrawing}>
-              {maskText.clear}
-            </button>
-            <button className="mask-secondary-button" type="button" onClick={() => setMaskOpen(false)}>
-              {maskText.cancel}
-            </button>
-            <button
-              className="edit-panel-send"
-              type="button"
-              onClick={submitMaskPrompt}
-              disabled={!cleanPrompt(maskPrompt) || !maskPaths.length}
-            >
-              {maskText.send}
-            </button>
+        <div className={`mask-panel-body${maskCollapsed ? " is-collapsed" : ""}`}>
+          <textarea
+            className="edit-panel-input"
+            value={maskPrompt}
+            onChange={(event) => setMaskPrompt(event.target.value)}
+            placeholder={maskText.placeholder}
+            spellCheck="false"
+          />
+          <div className="mask-panel-controls">
+            <div className="mask-brush-group">
+              <span className="mask-brush-label">{maskText.brush}</span>
+              <input
+                className="mask-brush-slider"
+                type="range"
+                min="12"
+                max="72"
+                step="2"
+                value={maskBrush}
+                onChange={(event) => setMaskBrush(Number(event.target.value))}
+              />
+            </div>
+            <div className="mask-panel-actions">
+              <button className="mask-secondary-button" type="button" onClick={clearMaskDrawing}>
+                {maskText.clear}
+              </button>
+              <button className="mask-secondary-button" type="button" onClick={() => setMaskOpen(false)}>
+                {maskText.cancel}
+              </button>
+              <button
+                className="edit-panel-send"
+                type="button"
+                onClick={submitMaskPrompt}
+                disabled={!cleanPrompt(maskPrompt) || !maskPaths.length}
+              >
+                {maskText.send}
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -294,6 +294,7 @@ export default function App() {
   const [referenceError, setReferenceError] = useState("");
   const [editOpen, setEditOpen] = useState(false);
   const [editPrompt, setEditPrompt] = useState("");
+  const [actionHint, setActionHint] = useState("");
   const [maskOpen, setMaskOpen] = useState(false);
   const [maskPrompt, setMaskPrompt] = useState("");
   const [maskBrush, setMaskBrush] = useState(36);
@@ -370,6 +371,15 @@ export default function App() {
         send: "Send",
         disabled: "Available for one editable image only",
       };
+  const generateHintText = lang === "zh"
+    ? {
+        edit: "\u8bf7\u70b9\u51fb\u7ee7\u7eed\u4fee\u6539\u5f39\u7a97\u91cc\u7684\u53d1\u9001",
+        mask: "\u8bf7\u70b9\u51fb\u5c40\u90e8\u4fee\u6539\u5f39\u7a97\u91cc\u7684\u53d1\u9001",
+      }
+    : {
+        edit: "Use Send inside the edit panel.",
+        mask: "Use Send inside the mask panel.",
+      };
   const suggestionGroups = useMemo(() => buildSuggestionGroups(t), [t]);
   const suggestionGroupMap = useMemo(
     () => Object.fromEntries(suggestionGroups.map((group) => [group.key, group])),
@@ -438,6 +448,12 @@ export default function App() {
       setMaskDataUrl("");
     }
   }, [result?.src]);
+
+  useEffect(() => {
+    if (!editOpen && !maskOpen) {
+      setActionHint("");
+    }
+  }, [editOpen, maskOpen]);
 
   useEffect(() => {
     const element = stageBodyRef.current?.closest(".stage-card");
@@ -815,6 +831,11 @@ export default function App() {
   }
 
   async function handleGenerate(options = {}) {
+    if (!options.mode && (editOpen || maskOpen)) {
+      setActionHint(maskOpen ? generateHintText.mask : generateHintText.edit);
+      return;
+    }
+
     const customPrompt = form.prompt.trim();
     const presetPrompt = activePresetText.trim();
     const editPromptText = cleanPrompt(options.prompt);
@@ -836,6 +857,7 @@ export default function App() {
     setStatus("loading");
     setResult(null);
     setMessage("");
+    setActionHint("");
     setDetailsOpen(false);
     setEditOpen(false);
     setGenerationMeta(null);
@@ -929,6 +951,7 @@ export default function App() {
     setDetailsOpen(false);
     setMaskOpen(false);
     setEditPrompt("");
+    setActionHint("");
     setEditOpen(true);
     setEditPanelPos({ x: 0, y: 8 });
   }
@@ -950,6 +973,7 @@ export default function App() {
     setDetailsOpen(false);
     setEditOpen(false);
     setMaskPrompt("");
+    setActionHint("");
     setMaskPaths([]);
     setMaskDataUrl("");
     setMaskCollapsed(false);
@@ -1906,6 +1930,8 @@ export default function App() {
                     <span className="stage-timer-dot" aria-hidden="true"></span>
                     {formatElapsed(elapsedSeconds)}
                   </span>
+                ) : actionHint ? (
+                  <span className="stage-hint">{actionHint}</span>
                 ) : (
                   <div className="stage-top-spacer"></div>
                 )}

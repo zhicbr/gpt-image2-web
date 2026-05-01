@@ -1024,6 +1024,12 @@ a {
   opacity: 0.88;
 }
 
+.stage-hint {
+  color: color-mix(in srgb, var(--muted) 88%, var(--accent) 12%);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
 .stage-timer-dot {
   width: 7px;
   height: 7px;

@@ -2,14 +2,6 @@ function cleanString(value, fallback = "") {
   return typeof value === "string" ? value.trim() : fallback;
 }
 
-function logEvent(event, data = {}) {
-  try {
-    console.log(`[generate] ${event}`, JSON.stringify(data));
-  } catch {
-    console.log(`[generate] ${event}`);
-  }
-}
-
 function validateGenerateInput(input) {
   const prompt = cleanString(input.prompt);
   if (!prompt) return { error: "Prompt is required." };
@@ -39,7 +31,6 @@ function validateGenerateInput(input) {
 export async function onRequestPost({ request, env }) {
   const apiKey = env.OPENAI_API_KEY;
   if (!apiKey) {
-    logEvent("missing_api_key");
     return new Response(JSON.stringify({ error: "OPENAI_API_KEY is missing in Cloudflare Environment Variables." }), {
       status: 500, headers: { "Content-Type": "application/json" },
     });
@@ -49,13 +40,11 @@ export async function onRequestPost({ request, env }) {
   try {
     input = await request.json();
   } catch {
-    logEvent("invalid_json");
     return new Response(JSON.stringify({ error: "Invalid JSON body." }), { status: 400 });
   }
 
   const validated = validateGenerateInput(input);
   if (validated.error) {
-    logEvent("validation_error", { error: validated.error });
     return new Response(JSON.stringify({ error: validated.error }), { status: 400 });
   }
 
@@ -87,17 +76,6 @@ export async function onRequestPost({ request, env }) {
     stream: true,
   };
 
-  logEvent("request_start", {
-    model: responsesModel,
-    promptLength: validated.prompt.length,
-    referenceImageCount: validated.referenceImages.length,
-    hasMaskImage: Boolean(validated.maskImage),
-    outputFormat: validated.outputFormat,
-    action: validated.maskImage ? "edit" : "auto",
-    openaiBaseUrl,
-    responsesPath,
-  });
-
   try {
     const upstream = await fetch(`${openaiBaseUrl}${responsesPath}`, {
       method: "POST",
@@ -111,11 +89,6 @@ export async function onRequestPost({ request, env }) {
 
     if (!upstream.ok) {
       const rawText = await upstream.text();
-      logEvent("upstream_error", {
-        status: upstream.status,
-        statusText: upstream.statusText,
-        bodyPreview: rawText.slice(0, 1200),
-      });
       let errorBody;
       try { errorBody = JSON.parse(rawText); } catch { errorBody = { error: rawText }; }
       return new Response(JSON.stringify(errorBody), {
@@ -123,11 +96,6 @@ export async function onRequestPost({ request, env }) {
         headers: { "Content-Type": "application/json" },
       });
     }
-
-    logEvent("upstream_ok", {
-      status: upstream.status,
-      contentType: upstream.headers.get("content-type") || "",
-    });
 
     const headers = new Headers();
     headers.set("Content-Type", "text/event-stream");
@@ -137,10 +105,6 @@ export async function onRequestPost({ request, env }) {
 
     return new Response(upstream.body, { status: 200, headers });
   } catch (error) {
-    logEvent("fetch_exception", {
-      message: error?.message || "unknown",
-      stack: error?.stack || "",
-    });
     return new Response(JSON.stringify({ error: error.message || "Failed to reach OpenAI." }), {
       status: 502, headers: { "Content-Type": "application/json" },
     });

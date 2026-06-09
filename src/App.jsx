@@ -725,7 +725,12 @@ export default function App() {
 
   function buildDownloadName(mimeType) {
     const extension = mimeType === "image/jpeg" ? "jpg" : mimeType?.split("/")[1] || form.outputFormat || "png";
-    return `image.${extension}`;
+    const now = new Date();
+    const pad = (n) => String(n).padStart(2, "0");
+    const timestamp =
+      `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}` +
+      `-${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+    return `image-${timestamp}.${extension}`;
   }
 
   function buildGenerationMeta() {

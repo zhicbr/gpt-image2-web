@@ -28,6 +28,18 @@ function writeStorage(key, value) {
   } catch {}
 }
 
+function readErrorMessage(payload, fallback) {
+  if (!payload) return fallback;
+  if (typeof payload === "string") return payload;
+  if (typeof payload.error === "string") return payload.error;
+  if (payload.error && typeof payload.error === "object") {
+    if (typeof payload.error.message === "string") return payload.error.message;
+    if (typeof payload.error.code === "string") return payload.error.code;
+  }
+  if (typeof payload.message === "string") return payload.message;
+  return fallback;
+}
+
 function SuggestionChips({ label, options, value, onToggle, labels }) {
   return (
     <div className="suggestion-group">
@@ -902,7 +914,7 @@ export default function App() {
         let errorMsg = t.messages.failed;
         try {
           const errJson = await response.json();
-          errorMsg = errJson.error || errJson.message || errorMsg;
+          errorMsg = readErrorMessage(errJson, errorMsg);
         } catch {}
         throw new Error(errorMsg);
       }
@@ -910,7 +922,7 @@ export default function App() {
       const contentType = response.headers.get("Content-Type") || "";
       if (!contentType.includes("text/event-stream")) {
         const json = await response.json();
-        if (json.error) throw new Error(json.error);
+        if (json.error || json.message) throw new Error(readErrorMessage(json, t.messages.failed));
         throw new Error(t.messages.failed);
       }
 

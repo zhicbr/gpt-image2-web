@@ -725,7 +725,7 @@ export default function App() {
 
   function buildDownloadName(mimeType) {
     const extension = mimeType === "image/jpeg" ? "jpg" : mimeType?.split("/")[1] || form.outputFormat || "png";
-    return `frame-forge.${extension}`;
+    return `image.${extension}`;
   }
 
   function buildGenerationMeta() {

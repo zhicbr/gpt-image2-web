@@ -82,6 +82,20 @@ OPENAI_BASE_URL=https://api.openai.com/v1
 OPENAI_MODEL=gpt-5.4
 ```
 
+环境变量修改后，需要重新部署才能生效！！！！
+
+
+
+`.dev.vars`（本地测试改这个，而不是env）：
+
+```
+OPENAI_API_KEY=61E5B10C-B4E6-4BF2-960B-20EC575176C2
+PORT=3000
+OPENAI_BASE_URL=https://capi.quan2go.com/openai
+```
+
+
+
 ## 项目结构
 
 ```

@@ -875,6 +875,26 @@ a {
   transform: translateY(-1px);
 }
 
+.backend-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface-2);
+}
+
+.toggle-button-backend {
+  min-width: 54px;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
 .edit-panel-send:disabled {
   opacity: 0.42;
   cursor: default;

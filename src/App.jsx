@@ -288,6 +288,7 @@ export default function App() {
   const [mode, setMode] = useState(readStorage("ff-mode", "system"));
   const [accent, setAccent] = useState(readStorage("ff-accent", "blue"));
   const [collapsed, setCollapsed] = useState(readStorage("ff-collapsed", "false") === "true");
+  const [backend, setBackend] = useState(readStorage("ff-backend", "responses"));
   const [tab, setTab] = useState("custom");
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
@@ -445,7 +446,8 @@ export default function App() {
     writeStorage("ff-mode", mode);
     writeStorage("ff-accent", accent);
     writeStorage("ff-collapsed", String(collapsed));
-  }, [accent, collapsed, lang, mode, resolvedMode]);
+    writeStorage("ff-backend", backend);
+  }, [accent, backend, collapsed, lang, mode, resolvedMode]);
 
   useEffect(() => {
     let cancelled = false;
@@ -983,6 +985,7 @@ export default function App() {
           outputFormat: form.outputFormat,
           referenceImages: requestReferences,
           maskImage: requestMask,
+          backend,
           n: "1",
         }),
       });
@@ -1953,6 +1956,22 @@ export default function App() {
           <div className="app-version">v{__APP_VERSION__}</div>
 
           <div className="bar-actions">
+            <div className="backend-switch" aria-label="backend-switch">
+              <button
+                className={`toggle-button toggle-button-backend${backend === "responses" ? " is-active" : ""}`}
+                type="button"
+                onClick={() => setBackend("responses")}
+              >
+                {t.top.backendResponses}
+              </button>
+              <button
+                className={`toggle-button toggle-button-backend${backend === "images" ? " is-active" : ""}`}
+                type="button"
+                onClick={() => setBackend("images")}
+              >
+                {t.top.backendImages}
+              </button>
+            </div>
             <button
               className={`icon-button access-key-toggle${accessKey ? " is-ready" : ""}`}
               type="button"

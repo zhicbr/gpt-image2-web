@@ -104,6 +104,59 @@ function shouldUseEditsBackend(validated, env) {
   return validated.referenceImages.length > 0 || Boolean(validated.maskImage);
 }
 
+async function handleResponsesBackend(validated, env, apiKey) {
+  const openaiBaseUrl = (env.OPENAI_BASE_URL || "https://capi.quan2go.com/openai").replace(/\/+$/, "");
+  const responsesPath = env.OPENAI_RESPONSES_PATH
+    ? (env.OPENAI_RESPONSES_PATH.startsWith("/") ? env.OPENAI_RESPONSES_PATH : `/${env.OPENAI_RESPONSES_PATH}`)
+    : "/responses";
+  const responsesModel = cleanString(env.OPENAI_MODEL, "gpt-5.4");
+
+  const payload = {
+    model: responsesModel,
+    instructions: "You are powering a local image generation UI. You must call the image_generation tool exactly once. Do not answer with text only.",
+    input: [{
+      type: "message",
+      role: "user",
+      content: [
+        { type: "input_text", text: validated.prompt },
+        ...validated.referenceImages.map((imageUrl) => ({ type: "input_image", image_url: imageUrl })),
+      ],
+    }],
+    tools: [{
+      type: "image_generation",
+      output_format: validated.outputFormat,
+      action: validated.maskImage ? "edit" : "auto",
+      ...(validated.maskImage ? { input_image_mask: { image_url: validated.maskImage } } : {}),
+    }],
+    tool_choice: "required",
+    parallel_tool_calls: false,
+    stream: true,
+  };
+
+  const upstream = await fetch(`${openaiBaseUrl}${responsesPath}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "text/event-stream",
+      "Authorization": `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!upstream.ok) {
+    const rawText = await upstream.text();
+    return jsonResponse(buildErrorBody(rawText), upstream.status);
+  }
+
+  const headers = new Headers();
+  headers.set("Content-Type", "text/event-stream");
+  headers.set("Cache-Control", "no-cache");
+  headers.set("Connection", "keep-alive");
+  headers.set("X-Accel-Buffering", "no");
+
+  return new Response(upstream.body, { status: 200, headers });
+}
+
 async function handleImagesBackend(validated, env, apiKey) {
   const imageBaseUrl = (env.OPENAI_IMAGE_BASE_URL || "https://sapi.micosoft.icu/v1").replace(/\/+$/, "");
   const imagesPath = env.OPENAI_IMAGES_PATH
@@ -212,6 +265,9 @@ export async function onRequestPost({ request, env }) {
   }
 
   try {
+    if (cleanString(env.IMAGE_BACKEND, "auto") === "responses" || validated.backend === "responses") {
+      return await handleResponsesBackend(validated, env, apiKey);
+    }
     if (shouldUseEditsBackend(validated, env)) {
       return await handleEditsBackend(validated, env, apiKey);
     }

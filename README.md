@@ -30,6 +30,7 @@
 - 主题：4 种配色 + 亮/暗/系统模式
 - 移动端适配：侧栏抽屉、设置折叠菜单、触控优化
 - 图片结果支持缩放、拖拽、下载
+- 每人一把访问密钥（Supabase `access_keys`），生成前弹窗填写
 
 ## 本地开发
 
@@ -68,21 +69,36 @@ npx wrangler pages dev public   # http://localhost:8788
 
 | 变量名 | 说明 |
 |--------|------|
-| `OPENAI_API_KEY` | OpenAI API Key（建议作为 Secret） |
-| `OPENAI_BASE_URL` | API 基础地址，默认 `https://api.openai.com/v1` |
-| `OPENAI_MODEL` | 模型名称，默认 `gpt-5.4` |
+| `OPENAI_API_KEY` | 上游 OpenAI / 中继 API Key（Secret） |
+| `OPENAI_IMAGE_BASE_URL` | 上游图片 API 基础地址（含 `/v1`） |
+| `OPENAI_IMAGE_MODEL` | 图片模型名，如 `gpt-image-2.5-flare` |
+| `OPENAI_MODEL` | 健康检查展示用模型名（可选） |
+| `SUPABASE_URL` | Supabase 项目 URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role（Secret，仅 Functions 使用） |
+
+## 访问密钥
+
+前端可公开浏览；调用 `/api/generate` 时需在请求头携带 `X-Access-Key`。
+
+密钥明文不入库，只把 SHA-256 hex 存到 Supabase 表 `access_keys`。前端把密钥放在 `sessionStorage`（`site_access_key`），通过弹窗填写；顶栏钥匙按钮可更换或清除。
+
+新增密钥示例 SQL：
+
+```sql
+insert into public.access_keys (name, key_hash, enabled, note)
+values (
+  'friend-1',
+  encode(digest('明文密钥写这里', 'sha256'), 'hex'),
+  true,
+  '可选备注'
+);
+```
+
+（需启用 `pgcrypto`：`create extension if not exists pgcrypto;`）
 
 ## 环境变量
 
-`.env.example`：
-
-```env
-OPENAI_API_KEY=sk-xxx
-OPENAI_BASE_URL=https://api.openai.com/v1
-OPENAI_MODEL=gpt-5.4
-```
-
-环境变量修改后，需要重新部署才能生效！！！！
+见 `.env.example`。环境变量修改后需要重新部署才能生效。
 
 
 
@@ -100,9 +116,11 @@ OPENAI_BASE_URL=https://capi.quan2go.com/openai
 
 ```
 .
-├── functions/api/         # Cloudflare Pages Functions
-│   ├── generate.js        # /api/generate  流式生图
-│   └── health.js          # /api/health    健康检查
+├── functions/
+│   ├── _lib/accessKey.js  # X-Access-Key → Supabase 校验
+│   └── api/
+│       ├── generate.js    # /api/generate  流式生图（需访问密钥）
+│       └── health.js      # /api/health    健康检查（公开）
 ├── prompts/               # 预设提示词库 JSON
 │   ├── index.json         # 仓库索引（静态导入）
 │   └── *.json             # 大 JSON 文件（build 时复制到 public/prompts/）

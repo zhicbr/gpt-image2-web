@@ -1,3 +1,5 @@
+import { requireAccessKey } from "../_lib/accessKey.js";
+
 function cleanString(value, fallback = "") {
   return typeof value === "string" ? value.trim() : fallback;
 }
@@ -187,6 +189,11 @@ function inputSizeFromPrompt(prompt) {
 }
 
 export async function onRequestPost({ request, env }) {
+  const access = await requireAccessKey(request, env);
+  if (!access.ok) {
+    return access.response;
+  }
+
   const apiKey = env.OPENAI_API_KEY;
   if (!apiKey) {
     return jsonResponse({ error: "OPENAI_API_KEY is missing in Cloudflare Environment Variables." }, 500);

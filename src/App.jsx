@@ -28,6 +28,23 @@ function writeStorage(key, value) {
   } catch {}
 }
 
+const ACCESS_KEY_STORAGE = "site_access_key";
+
+function readSession(key, fallback = "") {
+  try {
+    return window.sessionStorage.getItem(key) || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function writeSession(key, value) {
+  try {
+    if (value) window.sessionStorage.setItem(key, value);
+    else window.sessionStorage.removeItem(key);
+  } catch {}
+}
+
 function readErrorMessage(payload, fallback) {
   if (!payload) return fallback;
   if (typeof payload === "string") return payload;
@@ -316,6 +333,13 @@ export default function App() {
   const [maskStageBounds, setMaskStageBounds] = useState({ width: 0, height: 0 });
   const [editPanelPos, setEditPanelPos] = useState({ x: 0, y: 0 });
   const [maskPanelPos, setMaskPanelPos] = useState({ x: 0, y: 0 });
+  const [accessKey, setAccessKey] = useState(() => readSession(ACCESS_KEY_STORAGE, ""));
+  const [accessDraft, setAccessDraft] = useState("");
+  const [accessModalOpen, setAccessModalOpen] = useState(false);
+  const [accessModalMode, setAccessModalMode] = useState("required");
+  const [accessError, setAccessError] = useState("");
+  const [accessShowKey, setAccessShowKey] = useState(false);
+  const accessPendingRef = useRef(null);
 
   const t = COPY[lang];
   const detailsText = lang === "zh"
@@ -847,9 +871,59 @@ export default function App() {
     return `${String(minutes).padStart(2, "0")}:${String(remain).padStart(2, "0")}`;
   }
 
+  function openAccessModal(mode = "required", pendingOptions = null) {
+    accessPendingRef.current = pendingOptions;
+    setAccessDraft(accessKey);
+    setAccessError(mode === "invalid" ? t.access.invalid : "");
+    setAccessShowKey(false);
+    setAccessModalMode(mode);
+    setAccessModalOpen(true);
+  }
+
+  function closeAccessModal() {
+    setAccessModalOpen(false);
+    setAccessError("");
+    setAccessShowKey(false);
+    accessPendingRef.current = null;
+  }
+
+  function saveAccessKey(nextKey) {
+    const trimmed = (nextKey || "").trim();
+    if (!trimmed) {
+      setAccessError(t.access.missing);
+      return false;
+    }
+    writeSession(ACCESS_KEY_STORAGE, trimmed);
+    setAccessKey(trimmed);
+    setAccessError("");
+    return true;
+  }
+
+  function clearAccessKey() {
+    writeSession(ACCESS_KEY_STORAGE, "");
+    setAccessKey("");
+    setAccessDraft("");
+    setAccessError("");
+  }
+
+  function submitAccessModal(event) {
+    event?.preventDefault?.();
+    if (!saveAccessKey(accessDraft)) return;
+    const pending = accessPendingRef.current;
+    closeAccessModal();
+    if (pending) {
+      handleGenerate(pending);
+    }
+  }
+
   async function handleGenerate(options = {}) {
     if (!options.mode && (editOpen || maskOpen)) {
       setActionHint(maskOpen ? generateHintText.mask : generateHintText.edit);
+      return;
+    }
+
+    if (!accessKey.trim()) {
+      openAccessModal("required", options);
       return;
     }
 
@@ -900,7 +974,10 @@ export default function App() {
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-Access-Key": accessKey.trim(),
+        },
         body: JSON.stringify({
           prompt: requestPrompt,
           outputFormat: form.outputFormat,
@@ -912,10 +989,19 @@ export default function App() {
 
       if (!response.ok) {
         let errorMsg = t.messages.failed;
+        let errJson = null;
         try {
-          const errJson = await response.json();
+          errJson = await response.json();
           errorMsg = readErrorMessage(errJson, errorMsg);
         } catch {}
+        if (response.status === 401) {
+          setIsLoading(false);
+          setStatus("error");
+          setResult(null);
+          setMessage(t.access.invalid);
+          openAccessModal("invalid", options);
+          return;
+        }
         throw new Error(errorMsg);
       }
 
@@ -1868,6 +1954,16 @@ export default function App() {
 
           <div className="bar-actions">
             <button
+              className={`icon-button access-key-toggle${accessKey ? " is-ready" : ""}`}
+              type="button"
+              onClick={() => openAccessModal(accessKey ? "manage" : "required")}
+              aria-label={t.access.manage}
+              title={accessKey ? t.access.unlockedHint : t.access.lockedHint}
+            >
+              {accessKey ? "✓" : "🔑"}
+            </button>
+
+            <button
               className="icon-button settings-toggle"
               type="button"
               onClick={() => setShowSettings((prev) => !prev)}
@@ -1930,6 +2026,17 @@ export default function App() {
                   EN
                 </button>
               </div>
+
+              <button
+                className="ghost-button access-settings-button"
+                type="button"
+                onClick={() => {
+                  setShowSettings(false);
+                  openAccessModal(accessKey ? "manage" : "required");
+                }}
+              >
+                {accessKey ? t.access.change : t.access.manage}
+              </button>
             </div>
 
             <button className="primary-button" type="button" onClick={handleGenerate} disabled={isLoading}>
@@ -2028,6 +2135,63 @@ export default function App() {
           </div>
         </div>
       </main>
+
+      {accessModalOpen ? (
+        <div className="access-gate" role="dialog" aria-modal="true" aria-labelledby="access-gate-title">
+          <button className="access-gate-backdrop" type="button" aria-label={t.access.cancel} onClick={closeAccessModal}></button>
+          <form className="access-gate-card" onSubmit={submitAccessModal}>
+            <div className="access-gate-badge">{accessKey ? "✓" : "🔑"}</div>
+            <h2 id="access-gate-title" className="access-gate-title">{t.access.title}</h2>
+            <p className="access-gate-subtitle">{t.access.subtitle}</p>
+            <label className="access-gate-label" htmlFor="access-key-input">{t.access.placeholder}</label>
+            <div className="access-gate-input-row">
+              <input
+                id="access-key-input"
+                className="access-gate-input"
+                type={accessShowKey ? "text" : "password"}
+                value={accessDraft}
+                onChange={(event) => {
+                  setAccessDraft(event.target.value);
+                  if (accessError) setAccessError("");
+                }}
+                autoComplete="off"
+                spellCheck="false"
+                autoFocus
+                placeholder={t.access.placeholder}
+              />
+              <button
+                className="ghost-button access-gate-toggle"
+                type="button"
+                onClick={() => setAccessShowKey((prev) => !prev)}
+              >
+                {accessShowKey ? t.access.hide : t.access.show}
+              </button>
+            </div>
+            {accessError ? <div className="access-gate-error">{accessError}</div> : null}
+            <div className="access-gate-actions">
+              {accessModalMode === "manage" && accessKey ? (
+                <button
+                  className="ghost-button"
+                  type="button"
+                  onClick={() => {
+                    clearAccessKey();
+                    closeAccessModal();
+                  }}
+                >
+                  {t.access.clear}
+                </button>
+              ) : (
+                <button className="ghost-button" type="button" onClick={closeAccessModal}>
+                  {t.access.cancel}
+                </button>
+              )}
+              <button className="primary-button" type="submit">
+                {t.access.submit}
+              </button>
+            </div>
+          </form>
+        </div>
+      ) : null}
     </div>
   );
 }

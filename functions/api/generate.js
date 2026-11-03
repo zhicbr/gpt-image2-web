@@ -31,17 +31,48 @@ function buildSsePayload(base64, revisedPrompt = null) {
   return `data: ${JSON.stringify(event)}\n\n` + "data: [DONE]\n\n";
 }
 
-function sseResponseFromBase64(base64, revisedPrompt = null) {
+function createSseStreamResponse(handler) {
+  const encoder = new TextEncoder();
+  let timer = null;
+
   const stream = new ReadableStream({
-    start(controller) {
-      controller.enqueue(new TextEncoder().encode(buildSsePayload(base64, revisedPrompt)));
-      controller.close();
+    async start(controller) {
+      // 启动定时保活心跳（每 4.5 秒发一个 SSE 注释行 : ping\n\n）
+      // SSE 标准中以冒号开头的行是注释，前端 parseSseFrame 会自然跳过，
+      // 但它持续在 HTTP 连接上传输字节，阻止 Cloudflare 边缘代理 60s 空闲断开
+      timer = setInterval(() => {
+        try {
+          controller.enqueue(encoder.encode(": ping\n\n"));
+        } catch {
+          if (timer) clearInterval(timer);
+        }
+      }, 4500);
+
+      try {
+        await handler(controller, encoder);
+      } catch (err) {
+        const errorEvent = {
+          type: "error",
+          error: { message: err.message || "Failed to generate image." },
+        };
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify(errorEvent)}\n\n`));
+      } finally {
+        if (timer) clearInterval(timer);
+        try {
+          controller.close();
+        } catch {
+          // ignore already closed
+        }
+      }
+    },
+    cancel() {
+      if (timer) clearInterval(timer);
     },
   });
 
   const headers = new Headers();
-  headers.set("Content-Type", "text/event-stream");
-  headers.set("Cache-Control", "no-cache");
+  headers.set("Content-Type", "text/event-stream; charset=utf-8");
+  headers.set("Cache-Control", "no-cache, no-transform");
   headers.set("Connection", "keep-alive");
   headers.set("X-Accel-Buffering", "no");
 
@@ -157,7 +188,7 @@ async function handleResponsesBackend(validated, env, apiKey) {
   return new Response(upstream.body, { status: 200, headers });
 }
 
-async function handleImagesBackend(validated, env, apiKey) {
+function handleImagesBackend(validated, env, apiKey) {
   const imageBaseUrl = (env.OPENAI_IMAGE_BASE_URL || "https://sapi.micosoft.icu/v1").replace(/\/+$/, "");
   const imagesPath = env.OPENAI_IMAGES_PATH
     ? (env.OPENAI_IMAGES_PATH.startsWith("/") ? env.OPENAI_IMAGES_PATH : `/${env.OPENAI_IMAGES_PATH}`)
@@ -172,30 +203,34 @@ async function handleImagesBackend(validated, env, apiKey) {
     response_format: "b64_json",
   };
 
-  const upstream = await fetch(`${imageBaseUrl}${imagesPath}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify(payload),
+  return createSseStreamResponse(async (controller, encoder) => {
+    const upstream = await fetch(`${imageBaseUrl}${imagesPath}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!upstream.ok) {
+      const rawText = await upstream.text();
+      const errObj = buildErrorBody(rawText);
+      const errMsg = errObj?.error?.message || errObj?.error || rawText || `Upstream returned status ${upstream.status}`;
+      throw new Error(typeof errMsg === "string" ? errMsg : JSON.stringify(errMsg));
+    }
+
+    const body = await upstream.json();
+    const base64 = body?.data?.[0]?.b64_json;
+    if (!base64) {
+      throw new Error("No image was returned from images/generations.");
+    }
+
+    controller.enqueue(encoder.encode(buildSsePayload(base64)));
   });
-
-  if (!upstream.ok) {
-    const rawText = await upstream.text();
-    return jsonResponse(buildErrorBody(rawText), upstream.status);
-  }
-
-  const body = await upstream.json();
-  const base64 = body?.data?.[0]?.b64_json;
-  if (!base64) {
-    return jsonResponse({ error: "No image was returned from images/generations." }, 502);
-  }
-
-  return sseResponseFromBase64(base64);
 }
 
-async function handleEditsBackend(validated, env, apiKey) {
+function handleEditsBackend(validated, env, apiKey) {
   const imageBaseUrl = (env.OPENAI_IMAGE_BASE_URL || "https://sapi.micosoft.icu/v1").replace(/\/+$/, "");
   const editsPath = env.OPENAI_EDITS_PATH
     ? (env.OPENAI_EDITS_PATH.startsWith("/") ? env.OPENAI_EDITS_PATH : `/${env.OPENAI_EDITS_PATH}`)
@@ -214,26 +249,30 @@ async function handleEditsBackend(validated, env, apiKey) {
     formData.set("mask", dataUrlToBlob(validated.maskImage), "mask.png");
   }
 
-  const upstream = await fetch(`${imageBaseUrl}${editsPath}`, {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${apiKey}`,
-    },
-    body: formData,
+  return createSseStreamResponse(async (controller, encoder) => {
+    const upstream = await fetch(`${imageBaseUrl}${editsPath}`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+      },
+      body: formData,
+    });
+
+    if (!upstream.ok) {
+      const rawText = await upstream.text();
+      const errObj = buildErrorBody(rawText);
+      const errMsg = errObj?.error?.message || errObj?.error || rawText || `Upstream returned status ${upstream.status}`;
+      throw new Error(typeof errMsg === "string" ? errMsg : JSON.stringify(errMsg));
+    }
+
+    const body = await upstream.json();
+    const base64 = body?.data?.[0]?.b64_json;
+    if (!base64) {
+      throw new Error("No image was returned from images/edits.");
+    }
+
+    controller.enqueue(encoder.encode(buildSsePayload(base64, body?.data?.[0]?.revised_prompt || null)));
   });
-
-  if (!upstream.ok) {
-    const rawText = await upstream.text();
-    return jsonResponse(buildErrorBody(rawText), upstream.status);
-  }
-
-  const body = await upstream.json();
-  const base64 = body?.data?.[0]?.b64_json;
-  if (!base64) {
-    return jsonResponse({ error: "No image was returned from images/edits." }, 502);
-  }
-
-  return sseResponseFromBase64(base64, body?.data?.[0]?.revised_prompt || null);
 }
 
 function inputSizeFromPrompt(prompt) {
